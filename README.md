@@ -1,6 +1,6 @@
-# JFrog CLI Integration Environment
+# JFrog Ecosystem Integration Environment
 
-JFrog CLI integration environment is a Docker image containing all build tools the JFrog CLI supports.
+JFrog Ecosystem integration environment is a Docker image containing all build tools the JFrog CLI supports.
 
 ## Supported build tools
 
