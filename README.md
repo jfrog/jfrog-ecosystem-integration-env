@@ -1,10 +1,10 @@
 # JFrog Ecosystem Integration Environment
 
-JFrog Ecosystem integration environment is a docker image containing all the tools JFrog CLI integrates with and supports.
+JFrog Ecosystem integration environment is a Docker image containing all the tools JFrog CLI integrates with and supports.
 
 ## Supported tools
 
-The image is using `apt` and `sdkman` to download the build tools. Note: In the :latest tag, the tools versions may change.
+The image is using `apt` and `sdkman` to download the build tools. Note: In the `:latest` tag, the tools versions may change.
 
 Operating system: Ubuntu 20.04.
 
