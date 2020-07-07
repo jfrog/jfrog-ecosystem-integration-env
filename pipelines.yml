@@ -1,0 +1,34 @@
+resources:
+  - name: integrationEnvGit
+    type: GitRepo
+    configuration:
+      path: jfrog/jfrog-ecosystem-integration-env
+      gitProvider: github
+      buildOn:
+        tagCreate: true
+      branches:
+        include: master
+
+pipelines:
+  - name: Build_IntegrationEnv
+    steps:
+      - name: BuildAndPush
+        type: Bash
+        configuration:
+          integrations:
+            - name: releases_jfrog
+          inputResources:
+            - name: integrationEnvGit
+          environmentVariables:
+            JFROG_CLI_OFFER_CONFIG: "false"
+            IMAGE_NAME: releases-reg2.jfrog.io/jfrog-ecosystem-integration-env:${res_integrationEnvGit_gitTagName:-latest}
+        execution:
+          onStart:
+            - update_commit_status integrationEnvGit --context "$step_name"
+          onExecute:
+            - echo "Building docker image $IMAGE_NAME"
+            - docker build $res_integrationEnvGit_resourcePath -t $IMAGE_NAME
+            - curl -fL https://getcli.jfrog.io | sh
+            - ./jfrog rt docker-push $IMAGE_NAME reg2 --url=https://releases.jfrog.io/artifactory --access-token=$int_releases_jfrog_token
+          onComplete:
+            - update_commit_status integrationEnvGit --context "$step_name"
