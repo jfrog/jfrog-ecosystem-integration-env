@@ -18,8 +18,8 @@ Operating system: Ubuntu 20.04.
 |   jq    |      1.6.x      |       jq       |                  Ubuntu archive                  |
 | MSBuild |    16.5.x-ci    |    msbuild     |  https://download.mono-project.com/repo/ubuntu   |
 | NodeJS  |      10.x       |     nodejs     |                  Ubuntu archive                  |
-|  Mono   |     6.8.0.x     |   mono-devel   |  https://download.mono-project.com/repo/ubuntu   |
 |  Maven  |      3.6.x      |     maven      |           https://sdkman.io/sdks#maven           |
+|  Mono   |     6.8.0.x     |   mono-devel   |  https://download.mono-project.com/repo/ubuntu   |
 |   npm   |     6.14.x      |      npm       |                  Ubuntu archive                  |
 |  NuGet  |     5.5.0.x     |     nuget      |  https://download.mono-project.com/repo/ubuntu   |
 |   Pip   |     20.0.x      |  python3-pip   |                  Ubuntu archive                  |
