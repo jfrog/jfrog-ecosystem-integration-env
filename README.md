@@ -15,7 +15,7 @@ Operating system: Ubuntu 20.04.
 |   Go    |     1.14.x      |  golang-1.14   |                  Ubuntu archive                  |
 | Gradle  |      6.5.x      |     gradle     |          https://sdkman.io/sdks#gradle           |
 |   JDK   |     11.0.x      | 11.0.7.hs-adpt |       https://sdkman.io/jdks#AdoptOpenJDK        |
-|   JQ    |      1.6.x      |       jq       |                  Ubuntu archive                  |
+|   jq    |      1.6.x      |       jq       |                  Ubuntu archive                  |
 | MSBuild |    16.5.x-ci    |    msbuild     |  https://download.mono-project.com/repo/ubuntu   |
 | NodeJS  |      10.x       |     nodejs     |                  Ubuntu archive                  |
 |  Mono   |     6.8.0.x     |   mono-devel   |  https://download.mono-project.com/repo/ubuntu   |
