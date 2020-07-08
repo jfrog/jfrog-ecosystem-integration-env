@@ -5,12 +5,14 @@ resources:
       path: jfrog/jfrog-ecosystem-integration-env
       gitProvider: github
       buildOn:
+        # Build on commit and tags
         tagCreate: true
       branches:
+        # Only build on the master
         include: master
 
 pipelines:
-  - name: Build_IntegrationEnv
+  - name: build_integration_env
     steps:
       - name: BuildAndPush
         type: Bash
@@ -21,13 +23,16 @@ pipelines:
             - name: integrationEnvGit
           environmentVariables:
             JFROG_CLI_OFFER_CONFIG: "false"
+            # The image tag is the Git tag if exist or 'latest'
             IMAGE_NAME: releases-reg2.jfrog.io/jfrog-ecosystem-integration-env:${res_integrationEnvGit_gitTagName:-latest}
         execution:
           onStart:
             - update_commit_status integrationEnvGit --context "$step_name"
           onExecute:
             - echo "Building docker image $IMAGE_NAME"
+            # Build docker image
             - docker build $res_integrationEnvGit_resourcePath -t $IMAGE_NAME
+            # Push docker image
             - curl -fL https://getcli.jfrog.io | sh
             - ./jfrog rt docker-push $IMAGE_NAME reg2 --url=https://releases.jfrog.io/artifactory --access-token=$int_releases_jfrog_token
           onComplete:
