@@ -1,3 +1,6 @@
+[![JFrog Pipelines](https://badgen.net/github/status/jfrog/jfrog-ecosystem-integration-env/master?label=JFrog%20Pipelines)](https://ecosysjfrog-pipelines.jfrog.io/default_project/pipelines/build_integration_env?branch=master)
+[![Latest Tag](https://badgen.net/github/tag/jfrog/jfrog-ecosystem-integration-env)](https://releases.jfrog.io/ui/repos/tree/General/docker%2Fjfrog-ecosystem-integration-env)
+
 # JFrog Ecosystem Integration Environment
 
 JFrog Ecosystem integration environment is a Docker image containing all the tools JFrog CLI integrates with and supports.
