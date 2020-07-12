@@ -2,6 +2,17 @@
 
 JFrog Ecosystem integration environment is a Docker image containing all the tools JFrog CLI integrates with and supports.
 
+## Using the Docker Image
+
+This Docker image can be pulled from `releases.jfrog.io` by running the following command:
+````
+docker pull releases-docker.jfrog.io/jfrog-ecosystem-integration-env:<tag>
+````
+Running the docker image:
+```
+docker run -it releases-docker.jfrog.io/jfrog-ecosystem-integration-env
+```
+
 ## Supported tools
 
 The image is using `apt` and `sdkman` to download the build tools. Note: In the `:latest` tag, the tools versions may change.
