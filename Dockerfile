@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-SHELL ["/bin/bash", "-c"] 
+SHELL ["/bin/bash", "-c"]
 
 # Environment variables
 ENV HOME /root
@@ -34,6 +34,12 @@ RUN source "/root/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk list java
     && sdk install maven \
     && sdk install gradle \
     && sdk flush archives
+
+# Install podman
+RUN echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+RUN curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key | apt-key add -
+RUN apt update
+RUN apt -yq install podman
 
 # Clean up
 RUN apt autoremove
