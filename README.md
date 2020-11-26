@@ -41,4 +41,4 @@ Operating system: Ubuntu 20.04.
 |  NuGet  |     5.5.0.x     |       nuget        |  https://download.mono-project.com/repo/ubuntu   |
 |   Pip   |     20.0.x      |    python3-pip     |                  Ubuntu archive                  |
 | Python  |      3.8.x      |    python3-pip     |                  Ubuntu archive                  |
-| Podman  |      2.1.x      |    podman          |                  Ubuntu archive                  |
+| Podman  |      2.1.x      |       podman       |    https://download.opensuse.org/repositories    |
