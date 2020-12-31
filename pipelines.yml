@@ -5,7 +5,7 @@ resources:
       path: jfrog/jfrog-ecosystem-integration-env
       gitProvider: github
       buildOn:
-        # Build on commit and tags
+        commit: true
         tagCreate: true
       branches:
         # Only build on the master
