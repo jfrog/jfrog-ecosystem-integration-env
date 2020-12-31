@@ -14,11 +14,15 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install prerequisites
 RUN apt update
-RUN apt install -yq zip unzip curl git uuid jq gettext golang-1.15-go python3-pip python3-venv nodejs npm
+RUN apt install -yq zip unzip curl git uuid jq gettext software-properties-common python3-pip python3-venv nodejs npm
 
 # Configure Python
 RUN ln -s /usr/bin/pip3 /usr/bin/pip
 RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# Install Go
+RUN add-apt-repository ppa:longsleep/golang-backports
+RUN apt update && apt install -yq golang-go
 
 # Install .NET & NuGet
 RUN curl -sL https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb
