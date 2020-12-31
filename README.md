@@ -29,7 +29,7 @@ Operating system: Ubuntu 20.04.
 | :-----: | :-------------: | :----------------: | :----------------------------------------------: |
 |  .NET   |  2.1.x, 3.1.x   | dotnet-sdk-2.1,3.1 | https://packages.microsoft.com/ubuntu/20.04/prod |
 |  cURL   |     7.68.x      |        curl        |                  Ubuntu archive                  |
-|   Go    |     1.14.x      |    golang-1.14     |                  Ubuntu archive                  |
+|   Go    |     1.15.x      |    golang-1.15     |                  Ubuntu archive                  |
 | Gradle  |      6.5.x      |       gradle       |          https://sdkman.io/sdks#gradle           |
 |   JDK   |     11.0.x      |   11.0.7.hs-adpt   |       https://sdkman.io/jdks#AdoptOpenJDK        |
 |   jq    |      1.6.x      |         jq         |                  Ubuntu archive                  |
