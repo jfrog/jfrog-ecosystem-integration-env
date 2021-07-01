@@ -18,7 +18,7 @@ RUN apt update
 RUN apt install -yq zip unzip curl git uuid jq gettext software-properties-common python3-pip python3-venv nodejs npm
 
 # Configure Python
-RUN ln -s /usr/bin/pip3 /usr/bin/pip
+RUN ln -sf /usr/bin/pip3 /usr/bin/pip
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Install Go
@@ -45,6 +45,13 @@ RUN echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontai
 RUN curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key | apt-key add -
 RUN apt update
 RUN apt -yq install podman
+
+# Upgrade npm
+RUN npm config set prefix /usr
+RUN npm install -g --force npm
+
+# Install Yarn
+RUN npm install -g yarn
 
 # Clean up
 RUN apt autoremove
