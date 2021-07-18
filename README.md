@@ -29,16 +29,17 @@ Operating system: Ubuntu 20.04.
 | :-----: | :-------------: | :----------------: | :----------------------------------------------: |
 |  .NET   |  2.1.x, 3.1.x   | dotnet-sdk-2.1,3.1 | https://packages.microsoft.com/ubuntu/20.04/prod |
 |  cURL   |     7.68.x      |        curl        |                  Ubuntu archive                  |
-|   Go    |     1.15.x      |     golang-go      |          ppa:longsleep/golang-backports          |
-| Gradle  |      6.7.x      |       gradle       |          https://sdkman.io/sdks#gradle           |
+|   Go    |     1.16.x      |     golang-go      |          ppa:longsleep/golang-backports          |
+| Gradle  |      7.1.x      |       gradle       |          https://sdkman.io/sdks#gradle           |
 |   JDK   |     11.0.x      |   11.0.7.hs-adpt   |       https://sdkman.io/jdks#AdoptOpenJDK        |
 |   jq    |      1.6.x      |         jq         |                  Ubuntu archive                  |
-|  Maven  |      3.6.x      |       maven        |           https://sdkman.io/sdks#maven           |
+|  Maven  |      3.8.x      |       maven        |           https://sdkman.io/sdks#maven           |
 |  Mono   |    6.12.0.x     |     mono-devel     |  https://download.mono-project.com/repo/ubuntu   |
-| MSBuild |    16.6.x-ci    |      msbuild       |  https://download.mono-project.com/repo/ubuntu   |
+| MSBuild |     16.6.x      |      msbuild       |  https://download.mono-project.com/repo/ubuntu   |
 | NodeJS  |     10.19.x     |       nodejs       |                  Ubuntu archive                  |
-|   npm   |     6.14.x      |        npm         |                  Ubuntu archive                  |
+|   npm   |     7.19.x      |        npm         |               npm public registry                |
+|  Yarn   |     1.22.x      |       yarn         |               npm public registry                |
 |  NuGet  |     5.6.0.x     |       nuget        |  https://download.mono-project.com/repo/ubuntu   |
 |   Pip   |     20.0.x      |    python3-pip     |                  Ubuntu archive                  |
-| Podman  |      2.1.x      |       podman       |    https://download.opensuse.org/repositories    |
+| Podman  |      3.2.x      |       podman       |    https://download.opensuse.org/repositories    |
 | Python  |      3.8.x      |    python3-pip     |                  Ubuntu archive                  |
