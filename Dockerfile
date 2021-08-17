@@ -1,13 +1,14 @@
 FROM ubuntu:20.04
 
 SHELL ["/bin/bash", "-c"]
-WORKDIR /root
+RUN useradd -ms /bin/bash frogger
+WORKDIR /home/frogger
 
 # Environment variables
-ENV HOME /root
-ENV JAVA_HOME /root/.sdkman/candidates/java/current
-ENV PATH /root/.sdkman/candidates/java/current/bin:/root/.sdkman/candidates/maven/current/bin:/root/.sdkman/candidates/gradle/current/bin:/usr/lib/go-1.14/bin:${PATH}
-ENV M2_HOME /root/.sdkman/candidates/maven/current
+ENV HOME /home/frogger
+ENV JAVA_HOME /home/frogger/.sdkman/candidates/java/current
+ENV PATH /home/frogger/.sdkman/candidates/java/current/bin:/home/frogger/.sdkman/candidates/maven/current/bin:/home/frogger/.sdkman/candidates/gradle/current/bin:/usr/lib/go-1.14/bin:${PATH}
+ENV M2_HOME /home/frogger/.sdkman/candidates/maven/current
 
 # Build time arguments
 ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=true
@@ -35,7 +36,7 @@ RUN apt install -yq apt-transport-https dotnet-sdk-2.1 dotnet-sdk-3.1 nuget msbu
 
 # Install Java, Maven and Gradle
 RUN curl -s "https://get.sdkman.io" | bash
-RUN source "/root/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk list java | grep -E "11.*hs-adpt" | head -1 | awk '{print $NF}'` && java -version \
+RUN source "/home/frogger/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk list java | grep -E "11.*hs-adpt" | head -1 | awk '{print $NF}'` && java -version \
     && sdk install maven \
     && sdk install gradle \
     && sdk flush archives
