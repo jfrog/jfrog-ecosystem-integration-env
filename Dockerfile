@@ -7,7 +7,7 @@ WORKDIR /home/frogger
 # Environment variables
 ENV HOME /home/frogger
 ENV JAVA_HOME /home/frogger/.sdkman/candidates/java/current
-ENV PATH /home/frogger/.sdkman/candidates/java/current/bin:/home/frogger/.sdkman/candidates/maven/current/bin:/home/frogger/.sdkman/candidates/gradle/current/bin:/usr/lib/go-1.14/bin:${PATH}
+ENV PATH /home/frogger/.sdkman/candidates/java/current/bin:/home/frogger/.sdkman/candidates/maven/current/bin:/home/frogger/.sdkman/candidates/gradle/current/bin:/usr/local/go/bin:${PATH}
 ENV M2_HOME /home/frogger/.sdkman/candidates/maven/current
 
 # Build time arguments
@@ -23,8 +23,7 @@ RUN ln -sf /usr/bin/pip3 /usr/bin/pip
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Install Go
-RUN add-apt-repository ppa:longsleep/golang-backports
-RUN apt update && apt install -yq golang-go
+RUN curl -fL https://golang.org/dl/go1.16.8.linux-amd64.tar.gz | tar -zxC /usr/local
 
 # Install .NET & NuGet
 RUN curl -sL https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb
