@@ -16,7 +16,14 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install prerequisites
 RUN apt update
-RUN apt install -yq zip unzip curl git uuid jq gettext python3-pip python3-venv nodejs npm
+RUN apt install -yq zip unzip curl git uuid jq gettext python3-pip python3-venv 
+
+# Install npm
+RUN curl -sL https://deb.nodesource.com/setup_16.x | sh
+RUN apt install -yq nodejs
+
+# Install Yarn
+RUN npm install -g yarn
 
 # Configure Python
 RUN ln -sf /usr/bin/pip3 /usr/bin/pip
@@ -43,15 +50,9 @@ RUN source "/home/frogger/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk l
 # Install podman
 RUN echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
 RUN curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key | apt-key add -
+RUN apt install ca-certificates
 RUN apt update
 RUN apt -yq install podman
-
-# Upgrade npm
-RUN npm config set prefix /usr
-RUN npm install -g --force npm
-
-# Install Yarn
-RUN npm install -g yarn
 
 # Clean up
 RUN apt autoremove

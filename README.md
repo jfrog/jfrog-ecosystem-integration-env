@@ -36,9 +36,9 @@ Operating system: Ubuntu 20.04.
 |  Maven  |      3.8.x      |       maven        |           https://sdkman.io/sdks#maven           |
 |  Mono   |    6.12.0.x     |     mono-devel     |  https://download.mono-project.com/repo/ubuntu   |
 | MSBuild |     16.6.x      |      msbuild       |  https://download.mono-project.com/repo/ubuntu   |
-| NodeJS  |     10.19.x     |       nodejs       |                  Ubuntu archive                  |
-|   npm   |     7.24.x      |        npm         |               npm public registry                |
-|  Yarn   |     1.22.x      |       yarn         |               npm public registry                |
+| NodeJS  |     16.13.x     |       nodejs       |                  Ubuntu archive                  |
+|   npm   |      8.1.x      |        npm         |               npm public registry                |
+|  Yarn   |     1.22.x      |        yarn        |               npm public registry                |
 |  NuGet  |     5.6.0.x     |       nuget        |  https://download.mono-project.com/repo/ubuntu   |
 |   Pip   |     20.0.x      |    python3-pip     |                  Ubuntu archive                  |
 | Podman  |      3.3.x      |       podman       |    https://download.opensuse.org/repositories    |
