@@ -19,7 +19,7 @@ RUN apt update
 RUN apt install -yq zip unzip curl git uuid jq gettext python3-pip python3-venv 
 
 # Install npm
-RUN curl -sL https://deb.nodesource.com/setup_16.x | sh
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt install -yq nodejs
 
 # Install Yarn
