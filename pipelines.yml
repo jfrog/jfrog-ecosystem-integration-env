@@ -3,7 +3,7 @@ resources:
     type: GitRepo
     configuration:
       path: jfrog/jfrog-ecosystem-integration-env
-      gitProvider: il-automation
+      gitProvider: il_automation
       buildOn:
         tagCreate: true
       branches:
