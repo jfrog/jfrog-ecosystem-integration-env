@@ -1,0 +1,8 @@
+{
+    "files": [
+      {
+        "pattern": "ecosys-docker-local/(jfrog-ecosystem-integration-env/${VERSION}/*)",
+        "target": "reg2/{1}"
+      }
+    ]
+  }

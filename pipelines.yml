@@ -3,37 +3,61 @@ resources:
     type: GitRepo
     configuration:
       path: jfrog/jfrog-ecosystem-integration-env
-      gitProvider: github
+      gitProvider: il_automation
       buildOn:
-        commit: true
         tagCreate: true
       branches:
         # Only build on the master
         include: master
 
 pipelines:
-  - name: build_integration_env
+  - name: release_integration_env
     steps:
       - name: BuildAndPush
         type: Bash
         configuration:
-          integrations:
-            - name: releases_jfrog
           inputResources:
             - name: integrationEnvGit
+              trigger: false
+          integrations:
+            - name: il_automation
+            - name: entplus_deployer
+            - name: releases_jfrog_io_deployer
           environmentVariables:
-            JFROG_CLI_OFFER_CONFIG: "false"
-            # The image tag is the Git tag if exist or 'latest'
-            IMAGE_NAME: releases-reg2.jfrog.io/jfrog-ecosystem-integration-env:${res_integrationEnvGit_gitTagName:-latest}
+            IMAGE_NAME: entplus.jfrog.io/ecosys-docker-local/jfrog-ecosystem-integration-env:${res_integrationEnvGit_gitTagName}
         execution:
           onStart:
             - update_commit_status integrationEnvGit --context "$step_name"
           onExecute:
-            - echo "Building docker image $IMAGE_NAME"
+            - cd $res_integrationEnvGit_resourcePath
+
+            # Set env
+            - export CI=true
+            - export JFROG_BUILD_STATUS=PASS
+            - export JFROG_CLI_BUILD_NAME=ecosystem-integration-env-release
+            - export JFROG_CLI_BUILD_NUMBER=$run_number
+            - export JFROG_CLI_BUILD_PROJECT=ecosys
+            - export IMAGE_NAME=entplus.jfrog.io/ecosys-docker-local/jfrog-ecosystem-integration-env:${res_integrationEnvGit_gitTagName}
+
+            # Download and config JFrog CLI
+            - curl -fL https://install-cli.jfrog.io | sh
+            - jf c rm --quiet
+            - jf c add internal --url=$int_entplus_deployer_url --user=$int_entplus_deployer_user --password=$int_entplus_deployer_apikey
+
             # Build docker image
-            - docker build $res_integrationEnvGit_resourcePath -t $IMAGE_NAME
+            - docker build . -t $IMAGE_NAME
+            - jf docker scan $IMAGE_NAME --fail=false
+
             # Push docker image
-            - curl -fL https://getcli.jfrog.io | sh
-            - ./jfrog rt docker-push $IMAGE_NAME reg2 --url=https://releases.jfrog.io/artifactory --access-token=$int_releases_jfrog_token
+            - jf rt docker-push $IMAGE_NAME ecosys-docker-local
+            - jf rt bag && jf rt bce
+            - jf rt bp
+
+            # Distribute release bundle
+            - jf ds rbc "jfrog-ecosystem-integration-env" $NEXT_VERSION --spec="release/specs/prod-rbc-spec.json" --spec-vars="VERSION=$NEXT_VERSION" --sign
+            - jf ds rbd "jfrog-ecosystem-integration-env" $NEXT_VERSION --site=releases.jfrog.io --sync
+
+            # Set 'latest' tag in releases.jfrog.io
+            - jf rt docker-promote jfrog-ecosystem-integration-env reg2 reg2 --copy --source-tag=$NEXT_VERSION --target-tag=latest --url=https://releases.jfrog.io/artifactory --access-token=$int_releases_jfrog_io_deployer_access_token
           onComplete:
             - update_commit_status integrationEnvGit --context "$step_name"
