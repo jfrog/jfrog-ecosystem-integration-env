@@ -1,0 +1,11 @@
+resources:
+  - name: integrationEnvGit
+    type: GitRepo
+    configuration:
+      path: jfrog/jfrog-ecosystem-integration-env
+      gitProvider: il_automation
+      buildOn:
+        commit: false
+      branches:
+        # Only build on the master
+        include: master

@@ -1,15 +1,3 @@
-resources:
-  - name: integrationEnvGit
-    type: GitRepo
-    configuration:
-      path: jfrog/jfrog-ecosystem-integration-env
-      gitProvider: il_automation
-      buildOn:
-        tagCreate: true
-      branches:
-        # Only build on the master
-        include: master
-
 pipelines:
   - name: release_integration_env
     steps:
@@ -24,7 +12,7 @@ pipelines:
             - name: entplus_deployer
             - name: releases_jfrog_io_deployer
           environmentVariables:
-            IMAGE_NAME: entplus.jfrog.io/ecosys-docker-local/jfrog-ecosystem-integration-env:${res_integrationEnvGit_gitTagName}
+            NEXT_VERSION: 0.0.0
         execution:
           onStart:
             - update_commit_status integrationEnvGit --context "$step_name"
@@ -37,7 +25,15 @@ pipelines:
             - export JFROG_CLI_BUILD_NAME=ecosystem-integration-env-release
             - export JFROG_CLI_BUILD_NUMBER=$run_number
             - export JFROG_CLI_BUILD_PROJECT=ecosys
-            - export IMAGE_NAME=entplus.jfrog.io/ecosys-docker-local/jfrog-ecosystem-integration-env:${res_integrationEnvGit_gitTagName}
+            - export IMAGE_NAME=entplus.jfrog.io/ecosys-docker-local/jfrog-ecosystem-integration-env:$NEXT_VERSION
+
+            # Configure git
+            - git checkout master
+            - git remote set-url origin https://$int_il_automation_token@github.com/jfrog/jfrog-ecosystem-integration-env.git
+
+            # Make sure versions provided
+            - echo "Checking variables"
+            - test -n "$NEXT_VERSION" -a "$NEXT_VERSION" != "0.0.0"
 
             # Download and config JFrog CLI
             - curl -fL https://install-cli.jfrog.io | sh
