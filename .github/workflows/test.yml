@@ -1,0 +1,39 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: entplus.jfrog.io/ecosys-docker-local/jfrog-ecosystem-integration-env:dev
+    steps:
+      - uses: actions/checkout@v2
+
+      # Try to load layers from cache
+      - uses: satackey/action-docker-layer-caching@v0
+        continue-on-error: true
+
+      # Build
+      - name: Build Image
+        run: docker build . -t $IMAGE_NAME
+
+      # Check versions
+      - name: Check Tools Versions
+        run: |
+          docker run $IMAGE_NAME dotnet --version
+          docker run $IMAGE_NAME curl --version
+          docker run $IMAGE_NAME go version
+          docker run $IMAGE_NAME gradle --version
+          docker run $IMAGE_NAME java --version
+          docker run $IMAGE_NAME jq --version
+          docker run $IMAGE_NAME mvn --version
+          docker run $IMAGE_NAME mono --version
+          docker run $IMAGE_NAME msbuild -ver
+          docker run $IMAGE_NAME node --version
+          docker run $IMAGE_NAME npm --version
+          docker run $IMAGE_NAME yarn --version
+          docker run $IMAGE_NAME nuget help
+          docker run $IMAGE_NAME pip --version
+          docker run $IMAGE_NAME podman --version
+          docker run $IMAGE_NAME python --version
