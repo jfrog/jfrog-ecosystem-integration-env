@@ -10,6 +10,7 @@ pipelines:
           integrations:
             - name: il_automation
             - name: entplus_deployer
+            - name: releases_jfrog_io_deployer
           environmentVariables:
             NEXT_VERSION: 0.0.0
         execution:
@@ -56,7 +57,7 @@ pipelines:
             - jf ds rbd "jfrog-ecosystem-integration-env" $NEXT_VERSION --site=releases.jfrog.io --sync
 
             # Set 'latest' tag in releases.jfrog.io
-            # - jf rt docker-promote jfrog-ecosystem-integration-env reg2 reg2 --copy --source-tag=$NEXT_VERSION --target-tag=latest --url=https://releases.jfrog.io/artifactory --access-token=$int_releases_jfrog_io_deployer_access_token
+            - jf rt docker-promote jfrog-ecosystem-integration-env reg2 reg2 --copy --source-tag=$NEXT_VERSION --target-tag=latest --url=https://releases.jfrog.io/artifactory --access-token=$int_releases_jfrog_io_deployer_access_token
 
             # Push tag
             - git push --tags
