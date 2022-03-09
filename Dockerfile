@@ -53,6 +53,8 @@ RUN curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontaine
 RUN apt install ca-certificates
 RUN apt update
 RUN apt -yq install podman
+# Link docker to podman
+RUN ln -s /usr/bin/podman /usr/bin/docker
 
 # Clean up
 RUN apt autoremove
