@@ -43,3 +43,4 @@ Operating system: Ubuntu 20.04.
 |   Pip   |     20.0.x      |    python3-pip     |                  Ubuntu archive                  |
 | Podman  |      3.3.x      |       podman       |    https://download.opensuse.org/repositories    |
 | Python  |      3.8.x      |    python3-pip     |                  Ubuntu archive                  |
+| Docker  |     20.10.x     |       docker       |     https://download.docker.com/linux/ubuntu     |    
