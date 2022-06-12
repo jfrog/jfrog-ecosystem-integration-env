@@ -37,3 +37,4 @@ jobs:
           docker run $IMAGE_NAME pip --version
           docker run $IMAGE_NAME podman --version
           docker run $IMAGE_NAME python --version
+          docker run $IMAGE_NAME docker --version
