@@ -29,7 +29,7 @@ Operating system: Ubuntu 20.04.
 | :-----: | :-------------: | :----------------: | :----------------------------------------------: |
 |  .NET   |  2.1.x, 3.1.x   | dotnet-sdk-2.1,3.1 | https://packages.microsoft.com/ubuntu/20.04/prod |
 |  cURL   |     7.68.x      |        curl        |                  Ubuntu archive                  |
-|   Go    |     1.17.x      |     golang-go      |          ppa:longsleep/golang-backports          |
+|   Go    |     1.18.x      |     golang-go      |              https://golang.org/dl               |
 | Gradle  |      7.2.x      |       gradle       |          https://sdkman.io/sdks#gradle           |
 |   JDK   |     11.0.x      |   11.0.7.hs-adpt   |       https://sdkman.io/jdks#AdoptOpenJDK        |
 |   jq    |      1.6.x      |         jq         |                  Ubuntu archive                  |
@@ -43,4 +43,4 @@ Operating system: Ubuntu 20.04.
 |   Pip   |     20.0.x      |    python3-pip     |                  Ubuntu archive                  |
 | Podman  |      3.3.x      |       podman       |    https://download.opensuse.org/repositories    |
 | Python  |      3.8.x      |    python3-pip     |                  Ubuntu archive                  |
-| Docker  |     20.10.x     |       docker       |     https://download.docker.com/linux/ubuntu     |    
+| Docker  |     20.10.x     |       docker       |     https://download.docker.com/linux/ubuntu     |

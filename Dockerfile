@@ -30,7 +30,7 @@ RUN ln -sf /usr/bin/pip3 /usr/bin/pip
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Install Go
-RUN curl -fL https://golang.org/dl/go1.17.2.linux-amd64.tar.gz | tar -zxC /usr/local
+RUN curl -fL https://golang.org/dl/go1.18.4.linux-amd64.tar.gz | tar -zxC /usr/local
 
 # Install .NET & NuGet
 RUN curl -sL https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb
