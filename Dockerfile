@@ -42,7 +42,7 @@ RUN apt install -yq apt-transport-https dotnet-sdk-2.1 dotnet-sdk-3.1 nuget msbu
 
 # Install Java, Maven and Gradle
 RUN curl -s "https://get.sdkman.io" | bash
-RUN source "/home/frogger/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk list java | grep -E "11.*hs-adpt" | head -1 | awk '{print $NF}'` && java -version \
+RUN source "/home/frogger/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk list java | grep -E "11.*tem" | head -1 | awk '{print $NF}'` && java -version \
     && sdk install maven \
     && sdk install gradle \
     && sdk flush archives

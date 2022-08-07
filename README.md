@@ -31,7 +31,7 @@ Operating system: Ubuntu 20.04.
 |  cURL   |     7.68.x      |        curl        |                  Ubuntu archive                  |
 |   Go    |     1.18.x      |     golang-go      |              https://golang.org/dl               |
 | Gradle  |      7.2.x      |       gradle       |          https://sdkman.io/sdks#gradle           |
-|   JDK   |     11.0.x      |   11.0.7.hs-adpt   |       https://sdkman.io/jdks#AdoptOpenJDK        |
+|   JDK   |     11.0.x      |        tem         |            https://sdkman.io/jdks#tem            |
 |   jq    |      1.6.x      |         jq         |                  Ubuntu archive                  |
 |  Maven  |      3.8.x      |       maven        |           https://sdkman.io/sdks#maven           |
 |  Mono   |    6.12.0.x     |     mono-devel     |  https://download.mono-project.com/repo/ubuntu   |
