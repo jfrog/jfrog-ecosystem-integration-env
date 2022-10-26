@@ -29,6 +29,7 @@ Operating system: Ubuntu 20.04.
 | :-----: | :-------------: | :----------------: | :----------------------------------------------: |
 |  .NET   |  2.1.x, 3.1.x   | dotnet-sdk-2.1,3.1 | https://packages.microsoft.com/ubuntu/20.04/prod |
 |  cURL   |     7.68.x      |        curl        |                  Ubuntu archive                  |
+| Docker  |     20.10.x     |       docker       |     https://download.docker.com/linux/ubuntu     |
 |   Go    |     1.18.x      |     golang-go      |              https://golang.org/dl               |
 | Gradle  |      7.2.x      |       gradle       |          https://sdkman.io/sdks#gradle           |
 |   JDK   |     11.0.x      |        tem         |            https://sdkman.io/jdks#tem            |
@@ -38,9 +39,10 @@ Operating system: Ubuntu 20.04.
 | MSBuild |     16.6.x      |      msbuild       |  https://download.mono-project.com/repo/ubuntu   |
 | NodeJS  |     16.13.x     |       nodejs       |                  Ubuntu archive                  |
 |   npm   |      8.1.x      |        npm         |               npm public registry                |
-|  Yarn   |     1.22.x      |        yarn        |               npm public registry                |
 |  NuGet  |     5.6.0.x     |       nuget        |  https://download.mono-project.com/repo/ubuntu   |
 |   Pip   |     20.0.x      |    python3-pip     |                  Ubuntu archive                  |
+| Pipenv  |    2022.10.x    |       pipenv       |                  Ubuntu archive                  |
 | Podman  |      3.3.x      |       podman       |    https://download.opensuse.org/repositories    |
+| Poetry  |      1.2.x      |       poetry       |                https://pypi.org/                 |
 | Python  |      3.8.x      |    python3-pip     |                  Ubuntu archive                  |
-| Docker  |     20.10.x     |       docker       |     https://download.docker.com/linux/ubuntu     |
+|  Yarn   |     1.22.x      |        yarn        |               npm public registry                |
