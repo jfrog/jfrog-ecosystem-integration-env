@@ -29,6 +29,12 @@ RUN npm install -g yarn
 RUN ln -sf /usr/bin/pip3 /usr/bin/pip
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
+# Install Pipenv
+RUN pip install --user pipenv
+
+# Install Poetry
+RUN curl -sSL https://install.python-poetry.org | python3 -
+
 # Install Go
 RUN curl -fL https://golang.org/dl/go1.18.5.linux-amd64.tar.gz | tar -zxC /usr/local
 
