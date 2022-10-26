@@ -21,8 +21,9 @@ jobs:
       # Check versions
       - name: Check Tools Versions
         run: |
-          docker run $IMAGE_NAME dotnet --version
           docker run $IMAGE_NAME curl --version
+          docker run $IMAGE_NAME docker --version
+          docker run $IMAGE_NAME dotnet --version
           docker run $IMAGE_NAME go version
           docker run $IMAGE_NAME gradle --version
           docker run $IMAGE_NAME java --version
@@ -32,11 +33,10 @@ jobs:
           docker run $IMAGE_NAME msbuild -ver
           docker run $IMAGE_NAME node --version
           docker run $IMAGE_NAME npm --version
-          docker run $IMAGE_NAME yarn --version
           docker run $IMAGE_NAME nuget help
           docker run $IMAGE_NAME pip --version
           docker run $IMAGE_NAME pipenv --version
-          docker run $IMAGE_NAME poetry --version
           docker run $IMAGE_NAME podman --version
+          docker run $IMAGE_NAME poetry --version
           docker run $IMAGE_NAME python --version
-          docker run $IMAGE_NAME docker --version
+          docker run $IMAGE_NAME yarn --version
