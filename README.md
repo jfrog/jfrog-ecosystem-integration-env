@@ -41,8 +41,8 @@ Operating system: Ubuntu 20.04.
 |   npm   |      8.1.x      |        npm         |               npm public registry                |
 |  NuGet  |     5.6.0.x     |       nuget        |  https://download.mono-project.com/repo/ubuntu   |
 |   Pip   |     20.0.x      |    python3-pip     |                  Ubuntu archive                  |
-| Pipenv  |   2022.10.x     |       pipenv       |       https://pipenv.pypa.io/en/latest/          |
+| Pipenv  |    2022.10.x    |       pipenv       |                  Ubuntu archive                  |
 | Podman  |      3.3.x      |       podman       |    https://download.opensuse.org/repositories    |
-| Poetry  |      1.2.x      |       poetry       |       https://install.python-poetry.org          |
+| Poetry  |      1.2.x      |       poetry       |                https://pypi.org/                 |
 | Python  |      3.8.x      |    python3-pip     |                  Ubuntu archive                  |
 |  Yarn   |     1.22.x      |        yarn        |               npm public registry                |
