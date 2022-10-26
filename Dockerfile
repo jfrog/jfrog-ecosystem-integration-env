@@ -30,7 +30,7 @@ RUN ln -sf /usr/bin/pip3 /usr/bin/pip
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Install Poetry
-RUN python3 -m pip install poetry
+RUN pip install poetry --quiet
 
 # Install Go
 RUN curl -fL https://golang.org/dl/go1.18.7.linux-amd64.tar.gz | tar -zxC /usr/local
