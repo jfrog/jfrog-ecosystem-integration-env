@@ -35,6 +35,8 @@ jobs:
           docker run $IMAGE_NAME yarn --version
           docker run $IMAGE_NAME nuget help
           docker run $IMAGE_NAME pip --version
+          docker run $IMAGE_NAME pipenv --version
+          docker run $IMAGE_NAME poetry --version
           docker run $IMAGE_NAME podman --version
           docker run $IMAGE_NAME python --version
           docker run $IMAGE_NAME docker --version
