@@ -26,7 +26,7 @@ The image is using `apt` and `sdkman` to download the build tools. Note: In the 
 Operating system: Ubuntu 20.04.
 
 |  Tool   | Current version |    Package name    |                      Source                      |
-| :-----: |:---------------:| :----------------: | :----------------------------------------------: |
+| :-----: | :-------------: | :----------------: | :----------------------------------------------: |
 |  .NET   |  2.1.x, 3.1.x   | dotnet-sdk-2.1,3.1 | https://packages.microsoft.com/ubuntu/20.04/prod |
 |  cURL   |     7.68.x      |        curl        |                  Ubuntu archive                  |
 | Docker  |     20.10.x     |       docker       |     https://download.docker.com/linux/ubuntu     |
