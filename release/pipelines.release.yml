@@ -45,7 +45,7 @@ pipelines:
 
             # Build docker image
             - docker build . -t $IMAGE_NAME
-            - jf docker scan $IMAGE_NAME --fail=false
+           # - jf docker scan $IMAGE_NAME --fail=false
 
             # Push docker image
             - jf rt docker-push $IMAGE_NAME ecosys-docker-local
