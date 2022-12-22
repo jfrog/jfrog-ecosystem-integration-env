@@ -16,7 +16,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install prerequisites
 RUN apt update
-RUN apt install -yq zip unzip curl git uuid jq gettext python3-pip python3-venv pipenv
+RUN apt install -yq zip unzip curl git uuid jq gettext python3-pip python3-venv
 
 # Install npm
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
@@ -29,8 +29,8 @@ RUN npm install -g yarn
 RUN ln -sf /usr/bin/pip3 /usr/bin/pip
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-# Install Poetry
-RUN pip install poetry --quiet
+# Install Pipenv and Poetry
+RUN pip install pipenv poetry --quiet
 
 # Install Go
 RUN curl -fL https://golang.org/dl/go1.19.2.linux-amd64.tar.gz | tar -zxC /usr/local
