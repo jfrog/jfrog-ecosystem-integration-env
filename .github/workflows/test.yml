@@ -8,7 +8,7 @@ jobs:
     env:
       IMAGE_NAME: entplus.jfrog.io/ecosys-docker-local/jfrog-ecosystem-integration-env:dev
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Try to load layers from cache
       - uses: satackey/action-docker-layer-caching@v0
