@@ -16,7 +16,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install prerequisites
 RUN apt-get update
-RUN apt-get install -yq zip unzip curl git uuid jq gettext python3-pip python3-venv
+RUN apt-get install -yq zip unzip curl git uuid jq gettext python3-pip python3-venv apt-utils
 
 # Install npm
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
@@ -41,7 +41,7 @@ RUN dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
 RUN echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | tee /etc/apt/sources.list.d/mono-official-stable.list
 RUN apt-get update
-RUN apt-get install -yq apt-transport-https dotnet-sdk-2.1 dotnet-sdk-3.1 nuget msbuild mono-devel
+RUN apt-get install -yq apt-transport-https dotnet-sdk-6 nuget msbuild mono-devel
 
 # Install Java, Maven and Gradle
 RUN curl -s "https://get.sdkman.io" | bash
