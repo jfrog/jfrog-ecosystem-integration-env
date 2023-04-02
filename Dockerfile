@@ -42,7 +42,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E03280
 RUN echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | tee /etc/apt/sources.list.d/mono-official-stable.list
 RUN rm /etc/apt/sources.list.d/microsoft-prod.list
 RUN apt-get update
-RUN apt-get install -yq apt-transport-https dotnet-6.0 nuget msbuild mono-devel
+RUN apt-get install -yq apt-transport-https dotnet-sdk-6.0 nuget msbuild mono-devel
 
 # Install Java, Maven and Gradle
 RUN curl -s "https://get.sdkman.io" | bash
