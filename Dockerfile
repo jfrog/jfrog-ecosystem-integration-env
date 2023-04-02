@@ -41,9 +41,10 @@ RUN dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
 RUN echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | tee /etc/apt/sources.list.d/mono-official-stable.list
 RUN apt-get update
-RUN apt-get install -yq apt-transport-https
+RUN apt-get remove 'dotnet*' 'aspnet*' 'netstandard*'
+RUN rm /etc/apt/sources.list.d/microsoft-prod.list
 RUN apt-get update
-RUN apt-get install -yq dotnet-runtime-6.0 nuget msbuild mono-devel
+RUN apt-get install -yq apt-transport-https dotnet-runtime-6.0 nuget msbuild mono-devel
 
 # Install Java, Maven and Gradle
 RUN curl -s "https://get.sdkman.io" | bash
