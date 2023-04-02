@@ -23,7 +23,7 @@ docker run -it releases-docker.jfrog.io/jfrog-ecosystem-integration-env
 
 The image is using `apt` and `sdkman` to download the build tools. Note: In the `:latest` tag, the tools versions may change.
 
-Operating system: Ubuntu 20.04.
+Operating system: Ubuntu 22.04.
 
 |  Tool   | Current version |    Package name    |                      Source                      |
 | :-----: | :-------------: | :----------------: | :----------------------------------------------: |
