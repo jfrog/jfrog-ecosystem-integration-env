@@ -1,6 +1,7 @@
 [![Test](https://github.com/jfrog/jfrog-ecosystem-integration-env/actions/workflows/test.yml/badge.svg)](https://github.com/jfrog/jfrog-ecosystem-integration-env/actions/workflows/test.yml)
 [![Latest Tag](https://badgen.net/github/tag/jfrog/jfrog-ecosystem-integration-env)](https://releases-docker.jfrog.io/artifactory/reg2/jfrog-ecosystem-integration-env/latest)
 
+
 # JFrog Ecosystem Integration Environment
 
 JFrog Ecosystem integration environment is a Docker image containing all the tools JFrog CLI integrates with and supports.
@@ -23,7 +24,7 @@ docker run -it releases-docker.jfrog.io/jfrog-ecosystem-integration-env
 
 The image is using `apt` and `sdkman` to download the build tools. Note: In the `:latest` tag, the tools versions may change.
 
-Operating system: Ubuntu 22.04.
+Operating system: ![GitHub](https://img.shields.io/static/v1?label=Ubuntu&message=+22.04+LTS&color=blue&style=for-the-badge&logo=ubuntu)
 
 |  Tool   | Current version |    Package name    |                      Source                      |
 | :-----: | :-------------: | :----------------: | :----------------------------------------------: |
