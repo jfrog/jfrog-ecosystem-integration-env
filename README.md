@@ -1,6 +1,7 @@
 [![Test](https://github.com/jfrog/jfrog-ecosystem-integration-env/actions/workflows/test.yml/badge.svg)](https://github.com/jfrog/jfrog-ecosystem-integration-env/actions/workflows/test.yml)
 [![Latest Tag](https://badgen.net/github/tag/jfrog/jfrog-ecosystem-integration-env)](https://releases-docker.jfrog.io/artifactory/reg2/jfrog-ecosystem-integration-env/latest)
 
+
 # JFrog Ecosystem Integration Environment
 
 JFrog Ecosystem integration environment is a Docker image containing all the tools JFrog CLI integrates with and supports.
@@ -23,26 +24,26 @@ docker run -it releases-docker.jfrog.io/jfrog-ecosystem-integration-env
 
 The image is using `apt` and `sdkman` to download the build tools. Note: In the `:latest` tag, the tools versions may change.
 
-Operating system: Ubuntu 20.04.
+Operating system: ![GitHub](https://img.shields.io/static/v1?label=Ubuntu&message=+22.04+LTS&color=blue&style=for-the-badge&logo=ubuntu)
 
 |  Tool   | Current version |    Package name    |                      Source                      |
 | :-----: | :-------------: | :----------------: | :----------------------------------------------: |
-|  .NET   |  2.1.x, 3.1.x   | dotnet-sdk-2.1,3.1 | https://packages.microsoft.com/ubuntu/20.04/prod |
-|  cURL   |     7.68.x      |        curl        |                  Ubuntu archive                  |
-| Docker  |     20.10.x     |       docker       |     https://download.docker.com/linux/ubuntu     |
+|  .NET   |       6.0       |   dotnet-sdk-6.0   | https://packages.microsoft.com/ubuntu/22.04/prod |
+|  cURL   |     7.81.0      |        curl        |                  Ubuntu archive                  |
+| Docker  |     23.0.2      |       docker       |     https://download.docker.com/linux/ubuntu     |
 |   Go    |     1.20.x      |     golang-go      |              https://golang.org/dl               |
-| Gradle  |      7.2.x      |       gradle       |          https://sdkman.io/sdks#gradle           |
+| Gradle  |      8.0.2      |       gradle       |          https://sdkman.io/sdks#gradle           |
 |   JDK   |     11.0.x      |        tem         |            https://sdkman.io/jdks#tem            |
 |   jq    |      1.6.x      |         jq         |                  Ubuntu archive                  |
-|  Maven  |      3.8.x      |       maven        |           https://sdkman.io/sdks#maven           |
+|  Maven  |      3.9.x      |       maven        |           https://sdkman.io/sdks#maven           |
 |  Mono   |    6.12.0.x     |     mono-devel     |  https://download.mono-project.com/repo/ubuntu   |
-| MSBuild |     16.6.x      |      msbuild       |  https://download.mono-project.com/repo/ubuntu   |
-| NodeJS  |     16.13.x     |       nodejs       |                  Ubuntu archive                  |
-|   npm   |      8.1.x      |        npm         |               npm public registry                |
-|  NuGet  |     5.6.0.x     |       nuget        |  https://download.mono-project.com/repo/ubuntu   |
-|   Pip   |     20.0.x      |    python3-pip     |                  Ubuntu archive                  |
-| Pipenv  |    2022.10.x    |       pipenv       |                  Ubuntu archive                  |
-| Podman  |      3.3.x      |       podman       |    https://download.opensuse.org/repositories    |
-| Poetry  |      1.2.x      |       poetry       |                https://pypi.org/                 |
-| Python  |      3.8.x      |    python3-pip     |                  Ubuntu archive                  |
+| MSBuild |     16.10.x     |      msbuild       |  https://download.mono-project.com/repo/ubuntu   |
+| NodeJS  |     16.19.x     |       nodejs       |                  Ubuntu archive                  |
+|   npm   |     8.19.x      |        npm         |               npm public registry                |
+|  NuGet  |     6.3.1.1     |       nuget        |  https://download.mono-project.com/repo/ubuntu   |
+|   Pip   |     22.0.x      |    python3-pip     |                  Ubuntu archive                  |
+| Pipenv  |    2023.3.x     |       pipenv       |                  Ubuntu archive                  |
+| Podman  |      3.4.x      |       podman       |    https://download.opensuse.org/repositories    |
+| Poetry  |      1.4.x      |       poetry       |                https://pypi.org/                 |
+| Python  |     3.10.x      |    python3-pip     |                  Ubuntu archive                  |
 |  Yarn   |     1.22.x      |        yarn        |               npm public registry                |
