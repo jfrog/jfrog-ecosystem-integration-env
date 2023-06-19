@@ -46,7 +46,7 @@ RUN apt-get install -yq apt-transport-https dotnet-sdk-6.0 nuget msbuild mono-de
 
 # Install Java, Maven and Gradle
 RUN curl -s "https://get.sdkman.io" | bash
-RUN source "/home/frogger/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk list java | grep -E "11.*tem" | head -1 | awk '{print $NF}'` && java -version \
+RUN source "/home/frogger/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk list java | grep -E "17.*tem" | head -1 | awk '{print $NF}'` && java -version \
     && sdk install maven \
     && sdk install gradle \
     && sdk flush archives
