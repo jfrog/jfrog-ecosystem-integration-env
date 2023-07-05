@@ -9,7 +9,7 @@ pipelines:
               trigger: false
           integrations:
             - name: il_automation
-            - name: entplus_deployer
+            - name: ecosys_entplus_deployer
             - name: releases_jfrog_io_deployer
           environmentVariables:
             NEXT_VERSION: 0.0.0
@@ -41,7 +41,7 @@ pipelines:
             # Download and config JFrog CLI
             - curl -fL https://install-cli.jfrog.io | sh
             - jf c rm --quiet
-            - jf c add internal --url=$int_entplus_deployer_url --user=$int_entplus_deployer_user --password=$int_entplus_deployer_apikey
+            - jf c add internal --url=$int_ecosys_entplus_deployer_url --user=$int_ecosys_entplus_deployer_user --password=$int_ecosys_entplus_deployer_apikey
 
             # Build docker image
             - docker build . -t $IMAGE_NAME
