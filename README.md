@@ -5,6 +5,20 @@
 
 JFrog Ecosystem integration environment is a Docker image containing all the tools JFrog CLI integrates with and supports.
 
+## Building the Docker image
+
+This Docker image can be built with the following command:
+
+```
+docker build releases-docker.jfrog.io/jfrog-ecosystem-integration-env:<tag>
+```
+
+You can modify the Java version by supplying the JAVA_HOME argument:
+
+```
+docker build . -t releases-docker.jfrog.io/jfrog-ecosystem-integration-env:JDK17 --build-arg JAVA_VERSION=17
+```
+
 ## Using the Docker Image
 
 This Docker image can be pulled from `releases.jfrog.io` by running the following command:

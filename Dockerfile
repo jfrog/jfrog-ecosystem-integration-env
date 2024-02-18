@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 SHELL ["/bin/bash", "-c"]
 RUN useradd -ms /bin/bash frogger
 WORKDIR /home/frogger
-ARG JAVA_VERSION=17
+ARG JAVA_VERSION=11
 
 # Environment variables
 ENV HOME /home/frogger
