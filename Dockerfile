@@ -34,7 +34,7 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN pip install pipenv poetry --quiet
 
 # Install Go
-RUN curl -fL https://golang.org/dl/go1.22.3.linux-amd64.tar.gz | tar -zxC /usr/local
+RUN curl -fL https://golang.org/dl/go1.22.4.linux-amd64.tar.gz | tar -zxC /usr/local
 
 # Install .NET & NuGet
 RUN curl -sL https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb
