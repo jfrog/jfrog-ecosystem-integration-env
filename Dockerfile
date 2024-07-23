@@ -53,8 +53,6 @@ RUN source "/home/frogger/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk l
     && sdk flush archives
 
 # Install Podman
-RUN echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/ /" | tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
-RUN curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_22.04/Release.key | apt-key add -
 RUN apt install -y ca-certificates
 RUN apt update
 RUN apt -yq install podman

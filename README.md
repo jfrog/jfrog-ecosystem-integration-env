@@ -42,7 +42,7 @@ Operating system: ![GitHub](https://img.shields.io/static/v1?label=Ubuntu&messag
 |  NuGet  |      6.6.x      |     nuget      |  https://download.mono-project.com/repo/ubuntu   |
 |   Pip   |     22.0.x      |  python3-pip   |                  Ubuntu archive                  |
 | Pipenv  |    2023.12.x    |     pipenv     |                  Ubuntu archive                  |
-| Podman  |      3.4.x      |     podman     |    https://download.opensuse.org/repositories    |
+| Podman  |      3.4.x      |     podman     |                  Ubuntu archive                  |
 | Poetry  |      1.7.x      |     poetry     |                https://pypi.org/                 |
 | Python  |     3.10.x      |  python3-pip   |                  Ubuntu archive                  |
 |  Yarn   |     1.22.x      |      yarn      |               npm public registry                |
