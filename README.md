@@ -26,11 +26,11 @@ The image is using `apt` and `sdkman` to download the build tools. Note: In the 
 Operating system: ![GitHub](https://img.shields.io/static/v1?label=Ubuntu&message=+22.04+LTS&color=blue&style=for-the-badge&logo=ubuntu)
 
 |  Tool   | Current version |  Package name  |                      Source                      |
-| :-----: | :-------------: | :------------: | :----------------------------------------------: |
+| :-----: |:---------------:| :------------: | :----------------------------------------------: |
 |  .NET   |       6.0       | dotnet-sdk-6.0 | https://packages.microsoft.com/ubuntu/22.04/prod |
 |  cURL   |     7.81.0      |      curl      |                  Ubuntu archive                  |
 | Docker  |     23.0.2      |     docker     |     https://download.docker.com/linux/ubuntu     |
-|   Go    |     1.23.1      |   golang-go    |              https://golang.org/dl               |
+|   Go    |     1.23.3      |   golang-go    |              https://golang.org/dl               |
 | Gradle  |      8.6.x      |     gradle     |          https://sdkman.io/sdks#gradle           |
 |   JDK   |     11.0.x      |      tem       |            https://sdkman.io/jdks#tem            |
 |   jq    |      1.6.x      |       jq       |                  Ubuntu archive                  |
