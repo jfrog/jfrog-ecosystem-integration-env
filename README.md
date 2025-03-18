@@ -27,22 +27,22 @@ Operating system: ![GitHub](https://img.shields.io/static/v1?label=Ubuntu&messag
 
 |  Tool   | Current version |  Package name  |                      Source                      |
 | :-----: |:---------------:| :------------: | :----------------------------------------------: |
-|  .NET   |       6.0       | dotnet-sdk-6.0 | https://packages.microsoft.com/ubuntu/22.04/prod |
+|  .NET   |      6.0.x      | dotnet-sdk-6.0 | https://packages.microsoft.com/ubuntu/22.04/prod |
 |  cURL   |     7.81.0      |      curl      |                  Ubuntu archive                  |
-| Docker  |     23.0.2      |     docker     |     https://download.docker.com/linux/ubuntu     |
-|   Go    |     1.23.4      |   golang-go    |              https://golang.org/dl               |
-| Gradle  |      8.6.x      |     gradle     |          https://sdkman.io/sdks#gradle           |
-|   JDK   |     11.0.x      |      tem       |            https://sdkman.io/jdks#tem            |
+| Docker  |     28.0.x      |     docker     |     https://download.docker.com/linux/ubuntu     |
+|   Go    |     1.23.x      |   golang-go    |              https://golang.org/dl               |
+| Gradle  |     8.13.x      |     gradle     |          https://sdkman.io/sdks#gradle           |
+|   JDK   |     17.0.x      |      tem       |            https://sdkman.io/jdks#tem            |
 |   jq    |      1.6.x      |       jq       |                  Ubuntu archive                  |
 |  Maven  |      3.9.x      |     maven      |           https://sdkman.io/sdks#maven           |
 |  Mono   |    6.12.0.x     |   mono-devel   |  https://download.mono-project.com/repo/ubuntu   |
 | MSBuild |     16.10.x     |    msbuild     |  https://download.mono-project.com/repo/ubuntu   |
-| NodeJS  |     18.19.x     |     nodejs     |               npm public registry                |
-|   npm   |     10.2.x      |      npm       |               npm public registry                |
+| NodeJS  |     18.20.x     |     nodejs     |               npm public registry                |
+|   npm   |     10.8.x      |      npm       |               npm public registry                |
 |  NuGet  |      6.6.x      |     nuget      |  https://download.mono-project.com/repo/ubuntu   |
 |   Pip   |     22.0.x      |  python3-pip   |                  Ubuntu archive                  |
-| Pipenv  |    2023.12.x    |     pipenv     |                  Ubuntu archive                  |
+| Pipenv  |    2024.4.x     |     pipenv     |                  Ubuntu archive                  |
 | Podman  |      3.4.x      |     podman     |                  Ubuntu archive                  |
-| Poetry  |      1.7.x      |     poetry     |                https://pypi.org/                 |
+| Poetry  |      1.8.x      |     poetry     |                https://pypi.org/                 |
 | Python  |     3.10.x      |  python3-pip   |                  Ubuntu archive                  |
 |  Yarn   |     1.22.x      |      yarn      |               npm public registry                |

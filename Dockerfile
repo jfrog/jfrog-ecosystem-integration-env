@@ -8,7 +8,7 @@ ARG JAVA_VERSION=17
 # Environment variables
 ENV HOME /home/frogger
 ENV JAVA_HOME /home/frogger/.sdkman/candidates/java/current
-ENV PATH /home/frogger/.sdkman/candidates/java/current/bin:/home/frogger/.sdkman/candidates/maven/current/bin:/home/frogger/.sdkman/candidates/gradle/current/bin:/usr/local/go/bin:${PATH}
+ENV PATH /home/frogger/.sdkman/candidates/java/current/bin:/home/frogger/.sdkman/candidates/maven/current/bin:/home/frogger/.sdkman/candidates/gradle/current/bin:/usr/local/go/bin:/home/frogger/go/bin:${PATH}
 ENV M2_HOME /home/frogger/.sdkman/candidates/maven/current
 
 # Build time arguments
@@ -34,7 +34,7 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN pip install pipenv poetry --quiet
 
 # Install Go
-RUN curl -fL https://golang.org/dl/go1.23.4.linux-amd64.tar.gz | tar -zxC /usr/local
+RUN curl -fL https://golang.org/dl/go1.23.7.linux-amd64.tar.gz | tar -zxC /usr/local
 
 # Install .NET & NuGet
 RUN curl -sL https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb
