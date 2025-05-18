@@ -8,7 +8,7 @@ ARG JAVA_VERSION=17
 # Environment variables
 ENV HOME /home/frogger
 ENV JAVA_HOME /home/frogger/.sdkman/candidates/java/current
-ENV PATH /home/frogger/.sdkman/candidates/java/current/bin:/home/frogger/.sdkman/candidates/maven/current/bin:/home/frogger/.sdkman/candidates/gradle/current/bin:/usr/local/go/bin:${PATH}
+ENV PATH /home/frogger/.sdkman/candidates/java/current/bin:/home/frogger/.sdkman/candidates/maven/current/bin:/home/frogger/.sdkman/candidates/gradle/current/bin:/usr/local/go/bin:/home/frogger/go/bin:${PATH}
 ENV M2_HOME /home/frogger/.sdkman/candidates/maven/current
 
 # Build time arguments
