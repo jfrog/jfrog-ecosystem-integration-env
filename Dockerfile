@@ -63,6 +63,9 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/d
 RUN apt update
 RUN apt install -y docker-ce docker-ce-cli containerd.io
 
+# Install PostgreSQL library
+RUN apt install -y libpq-dev
+
 # Clean up
 RUN apt autoremove
 RUN apt clean
