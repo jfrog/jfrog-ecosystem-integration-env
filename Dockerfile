@@ -16,7 +16,7 @@ ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=true
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install prerequisites
-RUN apt update
+RUN apt update && apt -yq upgrade
 RUN apt install -yq zip unzip curl git uuid jq gettext python3-pip python3-venv apt-utils gnupg lsb-release
 
 # Install npm
@@ -32,9 +32,11 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Install Pipenv and Poetry
 RUN pip install pipenv poetry --quiet
+# Override transitive pin from pipenv/poetry that pulled vulnerable cryptography 45.0.2
+RUN pip install --upgrade 'cryptography>=46.0.3' --quiet
 
 # Install Go
-RUN curl -fL https://golang.org/dl/go1.24.5.linux-amd64.tar.gz | tar -zxC /usr/local
+RUN curl -fL https://golang.org/dl/go1.26.3.linux-amd64.tar.gz | tar -zxC /usr/local
 
 # Install .NET & NuGet
 RUN curl -sL https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb
@@ -43,13 +45,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E03280
 RUN echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | tee /etc/apt/sources.list.d/mono-official-stable.list
 RUN rm /etc/apt/sources.list.d/microsoft-prod.list
 RUN apt update
-RUN apt install -yq apt-transport-https dotnet-sdk-6.0 nuget msbuild mono-devel
+RUN apt install -yq apt-transport-https dotnet-sdk-8.0 nuget msbuild mono-devel
 
 # Install Java, Maven and Gradle
 RUN curl -s "https://get.sdkman.io" | bash
 RUN source "/home/frogger/.sdkman/bin/sdkman-init.sh" && sdk install java `sdk list java | grep -E "$JAVA_VERSION.*tem" | head -1 | awk '{print $NF}'` && java -version \
     && sdk install maven \
-    && sdk install gradle \
+    && sdk install gradle 9.0.0 \
     && sdk flush archives
 
 # Install Podman
