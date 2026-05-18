@@ -27,11 +27,11 @@ Operating system: ![GitHub](https://img.shields.io/static/v1?label=Ubuntu&messag
 
 |  Tool   | Current version |  Package name  |                      Source                      |
 | :-----: |:---------------:| :------------: | :----------------------------------------------: |
-|  .NET   |      6.0.x      | dotnet-sdk-6.0 | <https://packages.microsoft.com/ubuntu/22.04/prod> |
+|  .NET   |      8.0.x      | dotnet-sdk-8.0 | <https://packages.microsoft.com/ubuntu/22.04/prod> |
 |  cURL   |     7.81.0      |      curl      |                  Ubuntu archive                  |
 | Docker  |     28.0.x      |     docker     |     <https://download.docker.com/linux/ubuntu>     |
-|   Go    |     1.24.x      |   golang-go    |              <https://golang.org/dl>               |
-| Gradle  |     8.13.x      |     gradle     |          <https://sdkman.io/sdks#gradle>           |
+|   Go    |     1.26.x      |   golang-go    |              <https://golang.org/dl>               |
+| Gradle  |     9.0.x       |     gradle     |          <https://sdkman.io/sdks#gradle>           |
 |   JDK   |     17.0.x      |      tem       |            <https://sdkman.io/jdks#tem>            |
 |   jq    |      1.6.x      |       jq       |                  Ubuntu archive                  |
 |  Maven  |      3.9.x      |     maven      |           <https://sdkman.io/sdks#maven>           |
