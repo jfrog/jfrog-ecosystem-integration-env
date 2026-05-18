@@ -41,9 +41,10 @@ RUN curl -fL https://golang.org/dl/go1.26.3.linux-amd64.tar.gz | tar -zxC /usr/l
 # Install .NET & NuGet
 RUN curl -sL https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb
 RUN dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
-# Mono apt source — signed-by keyring fetched over HTTPS from keyserver.ubuntu.com,
-# dearmored to binary OpenPGP. Avoids deprecated apt-key and flaky SKS hkp://...:80.
-RUN curl -fsSL 'https://keyserver.ubuntu.com/pks/lookup?op=get&options=mr&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF' \
+# Mono apt source — fetch the ASCII-armored key from the same host that serves the apt repo
+# (CI allows download.mono-project.com but blocks keyserver.ubuntu.com), then dearmor to the
+# binary OpenPGP format that signed-by= requires.
+RUN curl -fsSL https://download.mono-project.com/repo/xamarin.gpg \
       | gpg --dearmor -o /usr/share/keyrings/mono-archive-keyring.gpg
 RUN echo "deb [signed-by=/usr/share/keyrings/mono-archive-keyring.gpg] https://download.mono-project.com/repo/ubuntu stable-focal main" | tee /etc/apt/sources.list.d/mono-official-stable.list
 RUN rm /etc/apt/sources.list.d/microsoft-prod.list
