@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 SHELL ["/bin/bash", "-c"]
 RUN useradd -ms /bin/bash frogger
@@ -36,10 +36,14 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
 # Pipenv + Poetry. Then explicitly upgrade pip / setuptools / cryptography to
 # versions past the known-vulnerable ones (CVE-2025-8869 in pip < 25.3,
 # CVE-2025-47273 in setuptools < 78.1.1, multiple CVEs in cryptography < 46.0.3).
+# Finally refresh the wheels that virtualenv bundles for venv creation;
+# without this, scans flag the old pip/setuptools wheel files inside
+# site-packages/virtualenv/seed/wheels/embed/ even after our system upgrade.
 # --no-cache-dir avoids baking the wheel cache into the layer.
 RUN pip install --no-cache-dir --quiet pipenv poetry \
     && pip install --no-cache-dir --quiet --upgrade \
-         'pip>=25.3' 'setuptools>=78.1.1' 'cryptography>=46.0.3'
+         'pip>=25.3' 'setuptools>=78.1.1' 'cryptography>=46.0.3' \
+    && virtualenv --upgrade-embed-wheels
 
 # Install Go
 RUN curl -fL https://golang.org/dl/go1.26.3.linux-amd64.tar.gz | tar -zxC /usr/local
@@ -48,7 +52,10 @@ RUN curl -fL https://golang.org/dl/go1.26.3.linux-amd64.tar.gz | tar -zxC /usr/l
 # registered, then a single apt install + cache strip in the same layer.
 # The Mono signing key is fetched from download.mono-project.com (CI-allowlisted)
 # and dearmored, since keyserver.ubuntu.com is blocked and apt-key is deprecated.
-RUN curl -sL https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb \
+# Note: Mono's apt repo does not (yet) publish a noble channel; we point at
+# stable-focal, which the Mono project keeps backward-compatible for newer
+# Ubuntu releases. Re-evaluate if/when Mono publishes a noble channel.
+RUN curl -sL https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb \
     && curl -fsSL https://download.mono-project.com/repo/xamarin.gpg \
          | gpg --dearmor -o /usr/share/keyrings/mono-archive-keyring.gpg \
