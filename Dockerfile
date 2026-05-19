@@ -45,8 +45,13 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
 # without this, scans flag the old pip/setuptools wheel files inside
 # site-packages/virtualenv/seed/wheels/embed/ even after our system upgrade.
 # --no-cache-dir avoids baking the wheel cache into the layer.
+# --ignore-installed on the upgrade: Ubuntu's apt-packaged python3-pip /
+# python3-setuptools / python3-cryptography deliberately omit the RECORD
+# metadata, so pip cannot uninstall them to perform an upgrade. Instead we
+# install the new versions fresh into /usr/local/lib/python3.12/site-packages/,
+# which shadows the apt copies on sys.path.
 RUN pip install --no-cache-dir --quiet pipenv poetry \
-    && pip install --no-cache-dir --quiet --upgrade \
+    && pip install --no-cache-dir --quiet --upgrade --ignore-installed \
          'pip>=25.3' 'setuptools>=78.1.1' 'cryptography>=46.0.3' \
     && virtualenv --upgrade-embed-wheels
 
