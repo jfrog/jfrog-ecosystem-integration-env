@@ -6,10 +6,10 @@ WORKDIR /home/frogger
 ARG JAVA_VERSION=17
 
 # Environment variables
-ENV HOME /home/frogger
-ENV JAVA_HOME /home/frogger/.sdkman/candidates/java/current
-ENV PATH /home/frogger/.sdkman/candidates/java/current/bin:/home/frogger/.sdkman/candidates/maven/current/bin:/home/frogger/.sdkman/candidates/gradle/current/bin:/usr/local/go/bin:/home/frogger/go/bin:${PATH}
-ENV M2_HOME /home/frogger/.sdkman/candidates/maven/current
+ENV HOME=/+home/frogger
+ENV JAVA_HOME=/home/frogger/.sdkman/candidates/java/current
+ENV PATH=/home/frogger/.sdkman/candidates/java/current/bin:/home/frogger/.sdkman/candidates/maven/current/bin:/home/frogger/.sdkman/candidates/gradle/current/bin:/usr/local/go/bin:/home/frogger/go/bin:${PATH}
+ENV M2_HOME=/home/frogger/.sdkman/candidates/maven/current
 
 # Build time arguments
 ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=true
@@ -17,10 +17,15 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # OS prerequisites + CVE patches. Single layer with apt cache stripped at the end
 # so the cache doesn't bloat the image. --no-install-recommends drops doc/locale extras.
+# Also remove the EXTERNALLY-MANAGED marker that Ubuntu 24.04's Python 3.12 ships:
+# PEP 668 otherwise blocks `pip install` outside a venv, which is overly restrictive
+# for a build-environment image where pipenv/poetry/cryptography must be installed
+# system-wide and end users expect `pip` to work for ad-hoc package installs.
 RUN apt-get update && apt-get -yq upgrade \
     && apt-get install -yq --no-install-recommends \
          apt-transport-https apt-utils ca-certificates curl git gettext gnupg \
          jq lsb-release python3-pip python3-venv unzip uuid zip \
+    && rm -f /usr/lib/python3*/EXTERNALLY-MANAGED \
     && rm -rf /var/lib/apt/lists/*
 
 # Node.js + Yarn + python symlinks. NodeSource repo is set up then nodejs installed
