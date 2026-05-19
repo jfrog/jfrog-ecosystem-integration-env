@@ -13,6 +13,8 @@ pipelines:
             - name: releases_jfrog_io_deployer
           environmentVariables:
             NEXT_VERSION: 0.0.0
+            SKIP_PUBLISH: "false"
+            BUILD_BRANCH: master
         execution:
           onStart:
             - update_commit_status integrationEnvGit --context "$step_name"
@@ -27,8 +29,11 @@ pipelines:
             - export JFROG_CLI_BUILD_PROJECT=ecosys
             - export IMAGE_NAME=entplus.jfrog.io/ecosys-docker-local/jfrog-ecosystem-integration-env:$NEXT_VERSION
 
+            # Force SKIP_PUBLISH on non-master branches: only master may publish a release
+            - if [ "$BUILD_BRANCH" != "master" ]; then echo "BUILD_BRANCH=$BUILD_BRANCH (not master), forcing SKIP_PUBLISH=true"; export SKIP_PUBLISH="true"; fi
+
             # Configure git
-            - git checkout master
+            - git checkout $BUILD_BRANCH
             - git remote set-url origin https://$int_il_automation_token@github.com/jfrog/jfrog-ecosystem-integration-env.git
 
             # Make sure versions provided
@@ -46,6 +51,9 @@ pipelines:
             # Build docker image
             - docker build . -t $IMAGE_NAME
             - jf docker scan $IMAGE_NAME --fail=false --bypass-archive-limits=true
+
+            # Stop here if SKIP_PUBLISH is set; build + scan only, no publish/distribute/tag
+            - if [ "$SKIP_PUBLISH" = "true" ]; then echo "SKIP_PUBLISH=true, stopping after docker scan"; exit 0; fi
 
             # Push docker image
             - jf rt docker-push $IMAGE_NAME ecosys-docker-local

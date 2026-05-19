@@ -23,11 +23,11 @@ docker run -it releases-docker.jfrog.io/jfrog-ecosystem-integration-env
 
 The image is using `apt` and `sdkman` to download the build tools. Note: In the `:latest` tag, the tools versions may change.
 
-Operating system: ![GitHub](https://img.shields.io/static/v1?label=Ubuntu&message=+22.04+LTS&color=blue&style=for-the-badge&logo=ubuntu)
+Operating system: ![GitHub](https://img.shields.io/static/v1?label=Ubuntu&message=+24.04+LTS&color=blue&style=for-the-badge&logo=ubuntu)
 
 |  Tool   | Current version |  Package name  |                      Source                      |
 | :-----: |:---------------:| :------------: | :----------------------------------------------: |
-|  .NET   |      8.0.x      | dotnet-sdk-8.0 | <https://packages.microsoft.com/ubuntu/22.04/prod> |
+|  .NET   |      8.0.x      | dotnet-sdk-8.0 | <https://packages.microsoft.com/ubuntu/24.04/prod> |
 |  cURL   |     7.81.0      |      curl      |                  Ubuntu archive                  |
 | Docker  |     28.0.x      |     docker     |     <https://download.docker.com/linux/ubuntu>     |
 |   Go    |     1.26.x      |   golang-go    |              <https://golang.org/dl>               |
