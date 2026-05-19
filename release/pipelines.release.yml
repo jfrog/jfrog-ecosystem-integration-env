@@ -13,6 +13,7 @@ pipelines:
             - name: releases_jfrog_io_deployer
           environmentVariables:
             NEXT_VERSION: 0.0.0
+            SKIP_PUBLISH: "false"
         execution:
           onStart:
             - update_commit_status integrationEnvGit --context "$step_name"
@@ -46,6 +47,9 @@ pipelines:
             # Build docker image
             - docker build . -t $IMAGE_NAME
             - jf docker scan $IMAGE_NAME --fail=false --bypass-archive-limits=true
+
+            # Stop here if SKIP_PUBLISH is set; build + scan only, no publish/distribute/tag
+            - if [ "$SKIP_PUBLISH" = "true" ]; then echo "SKIP_PUBLISH=true, stopping after docker scan"; exit 0; fi
 
             # Push docker image
             - jf rt docker-push $IMAGE_NAME ecosys-docker-local
