@@ -19,6 +19,19 @@ Running the docker image:
 docker run -it releases-docker.jfrog.io/jfrog-ecosystem-integration-env
 ```
 
+## Releasing a new version
+
+Releases are managed from the internal [jfrog/jfrog-cli-internal](https://github.jfrog.info/JFROG/jfrog-cli-internal) automation repo. To publish a new version:
+
+1. Go to **Actions → Integration Env Release → Run workflow** in `jfrog-cli-internal`.
+2. Set `next_version` to the version you want to publish (e.g. `1.2.3`).
+3. Leave `build_branch` as `master` unless releasing from a different branch.
+4. Click **Run workflow**.
+
+The workflow builds the Docker image, runs an Xray scan, pushes to `ecosys-docker-local`, distributes via a release bundle to `releases.jfrog.io`, promotes the `latest` tag, and pushes the git tag.
+
+**Dry run**: set `dry_run: true` to build and scan the image without pushing or distributing anything. Use this to validate a `Dockerfile` change before a real release.
+
 ## Supported tools
 
 The image is using `apt` and `sdkman` to download the build tools. Note: In the `:latest` tag, the tools versions may change.
