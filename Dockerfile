@@ -56,7 +56,7 @@ RUN pip install --no-cache-dir --quiet pipenv poetry \
     && virtualenv --upgrade-embed-wheels
 
 # Install Go
-RUN curl -fL https://golang.org/dl/go1.26.3.linux-amd64.tar.gz | tar -zxC /usr/local
+RUN curl -fL https://golang.org/dl/go1.26.6.linux-amd64.tar.gz | tar -zxC /usr/local
 
 # Microsoft .NET SDK + Mono toolchain (NuGet, msbuild). Both apt sources are
 # registered, then a single apt install + cache strip in the same layer.
