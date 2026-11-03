@@ -1,0 +1,71 @@
+name: Vulnerability Scan
+
+# Builds the image and fails when it contains a fixable HIGH or CRITICAL vulnerability.
+# Runs on every PR, every night, and on demand. Nightly runs catch new CVEs that
+# appear after a release, before the next jfrog-cli release bundle is scanned.
+on:
+  pull_request:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      IMAGE_NAME: jfrog-ecosystem-integration-env:scan
+      TRIVY_IMAGE: aquasec/trivy:0.58.2
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Image
+        run: docker build . -t "$IMAGE_NAME"
+
+      # --ignore-unfixed: only report findings that have a fixed version, so every
+      # failure can be fixed by a version bump.
+      - name: Scan Image (report)
+        run: |
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v "$PWD/.trivy-cache:/root/.cache" \
+            -v "$PWD:/work" \
+            "$TRIVY_IMAGE" image \
+              --scanners vuln \
+              --severity HIGH,CRITICAL \
+              --ignore-unfixed \
+              --format json --output /work/trivy-report.json \
+              "$IMAGE_NAME"
+
+      - name: Summarize
+        if: always()
+        run: |
+          [ -f trivy-report.json ] || exit 0
+          {
+            echo "### Fixable HIGH and CRITICAL vulnerabilities"
+            echo
+            echo "| Package | Installed | Fixed in | Severity | CVE |"
+            echo "|---|---|---|---|---|"
+            jq -r '[.Results[]? | .Vulnerabilities[]?]
+                   | unique_by(.PkgName + .InstalledVersion + .VulnerabilityID)
+                   | sort_by(.Severity) | .[]
+                   | "| \(.PkgName) | \(.InstalledVersion) | \(.FixedVersion) | \(.Severity) | \(.VulnerabilityID) |"' \
+              trivy-report.json
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail on findings
+        run: |
+          COUNT=$(jq '[.Results[]? | .Vulnerabilities[]?] | length' trivy-report.json)
+          echo "Fixable HIGH/CRITICAL findings: $COUNT"
+          [ "$COUNT" -eq 0 ]
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-report
+          path: trivy-report.json
+          retention-days: 14
