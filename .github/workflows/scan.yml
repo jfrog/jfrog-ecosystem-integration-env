@@ -69,3 +69,60 @@ jobs:
           name: trivy-report
           path: trivy-report.json
           retention-days: 14
+
+  # Scans with JFrog CLI against Repo21 (OIDC login + `jf docker scan`),
+  # so a failure here is a failure the release bundle would hit.
+  # Needs repo variables JF_URL, JF_OIDC_PROVIDER and JF_OIDC_AUDIENCE.
+  # Optional variable XRAY_WATCH: the watch whose policy blocks release bundle distribution.
+  # Skipped when JF_URL is not set and on PRs from forks (no OIDC token there).
+  xray-scan:
+    if: ${{ vars.JF_URL != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      IMAGE_NAME: jfrog-ecosystem-integration-env:scan
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Repo21 via OIDC
+        id: setup-jfrog
+        uses: jfrog/setup-jfrog-cli@v4
+        env:
+          JF_URL: ${{ vars.JF_URL }}
+        with:
+          oidc-provider-name: ${{ vars.JF_OIDC_PROVIDER }}
+          oidc-audience: ${{ vars.JF_OIDC_AUDIENCE }}
+
+      - name: Build Image
+        run: docker build . -t "$IMAGE_NAME"
+
+      - name: Xray scan
+        env:
+          XRAY_WATCH: ${{ vars.XRAY_WATCH }}
+        run: |
+          OPTS=(--bypass-archive-limits=true)
+          if [ -n "$XRAY_WATCH" ]; then
+            OPTS+=(--watches="$XRAY_WATCH" --fail=true)
+          else
+            OPTS+=(--fail=false)
+          fi
+          jf docker scan "$IMAGE_NAME" "${OPTS[@]}" --format=simple-json | tee xray-report.json
+
+      # Without a watch there is no policy, so fail on fixable High and Critical findings.
+      - name: Fail on fixable High and Critical findings
+        if: ${{ vars.XRAY_WATCH == '' }}
+        run: |
+          COUNT=$(jq '[.vulnerabilities[]? | select((.severity == "Critical" or .severity == "High") and ((.fixedVersions // []) | length > 0))] | length' xray-report.json)
+          echo "Fixable High/Critical findings: $COUNT"
+          [ "$COUNT" -eq 0 ]
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xray-report
+          path: xray-report.json
+          retention-days: 14
