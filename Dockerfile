@@ -30,9 +30,17 @@ RUN apt-get update && apt-get -yq upgrade \
 
 # Node.js 24 LTS + Yarn + python symlinks. NodeSource repo is set up then nodejs installed
 # in the same layer; npm cache is cleaned to keep the layer minimal.
+# npm 11.19.1 (bundled with Node 24) ships undici 6.28.0 (CVE-2026-109383); it is replaced
+# with the fixed 6.29.1 from the same 6.x line so npm's own API usage stays compatible.
 RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -yq --no-install-recommends nodejs \
     && npm install -g --no-fund yarn \
+    && UNDICI_VERSION=6.29.1 \
+    && mkdir /tmp/undici-fix \
+    && (cd /tmp/undici-fix && npm pack --silent undici@${UNDICI_VERSION} && tar -xzf undici-${UNDICI_VERSION}.tgz) \
+    && rm -rf /usr/lib/node_modules/npm/node_modules/undici \
+    && mv /tmp/undici-fix/package /usr/lib/node_modules/npm/node_modules/undici \
+    && rm -rf /tmp/undici-fix \
     && npm cache clean --force \
     && rm -rf /root/.npm /var/lib/apt/lists/* \
     && ln -sf /usr/bin/pip3 /usr/bin/pip \
@@ -94,11 +102,29 @@ RUN printf '#!/bin/sh\nexec dotnet msbuild "$@"\n' > /usr/local/bin/msbuild \
 
 # Java JDK 17 + Maven + Gradle 9.8.2 via SDKMAN. Archives are flushed and SDKMAN
 # scratch dirs removed to keep the layer small.
+# Gradle 9.8.2 bundles jackson 2.22.3 (CVE-2026-110879), so the jackson jars (core, databind,
+# datatype-jdk8/jsr310) are swapped for 2.22.4 with SHA-1 verification against Maven Central.
+# jackson-annotations stays at 2.22: annotations are versioned 2.22 in the 2.22.4 BOM.
+# Gradle locates these jars by exact name via lib/jackson-*.properties, so those are updated too.
 RUN curl -s "https://get.sdkman.io" | bash \
     && source "/home/frogger/.sdkman/bin/sdkman-init.sh" \
     && sdk install java `sdk list java | grep -E "$JAVA_VERSION.*tem" | head -1 | awk '{print $NF}'` && java -version \
     && sdk install maven \
     && sdk install gradle 9.8.2 \
+    && GRADLE_LIB=/home/frogger/.sdkman/candidates/gradle/current/lib \
+    && JACKSON_VERSION=2.22.4 \
+    && JACKSON_REPO=https://repo1.maven.org/maven2/com/fasterxml/jackson \
+    && for coord in core/jackson-core core/jackson-databind datatype/jackson-datatype-jdk8 datatype/jackson-datatype-jsr310; do \
+         art=${coord#*/}; \
+         url="${JACKSON_REPO}/${coord%/*}/${art}/${JACKSON_VERSION}/${art}-${JACKSON_VERSION}.jar"; \
+         curl -fsSL --retry 5 --retry-delay 3 --retry-all-errors "$url" -o "/tmp/${art}.jar" \
+         && echo "$(curl -fsSL --retry 5 --retry-delay 3 --retry-all-errors "${url}.sha1")  /tmp/${art}.jar" | sha1sum -c - \
+         && rm -f "${GRADLE_LIB}/${art}"-[0-9]*.jar \
+         && mv "/tmp/${art}.jar" "${GRADLE_LIB}/${art}-${JACKSON_VERSION}.jar" \
+         || exit 1; \
+       done \
+    && sed -i "s/2\.22\.3/${JACKSON_VERSION}/g" "${GRADLE_LIB}"/jackson-*.properties \
+    && ! grep -rl '2\.22\.3' "${GRADLE_LIB}" \
     && sdk flush archives \
     && rm -rf /home/frogger/.sdkman/tmp /home/frogger/.sdkman/var/log
 
