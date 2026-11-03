@@ -44,15 +44,15 @@ Operating system: ![GitHub](https://img.shields.io/static/v1?label=Ubuntu&messag
 |  cURL   |     7.81.0      |      curl      |                  Ubuntu archive                  |
 | Docker  |     28.0.x      |     docker     |     <https://download.docker.com/linux/ubuntu>     |
 |   Go    |     1.26.x      |   golang-go    |              <https://golang.org/dl>               |
-| Gradle  |     9.0.x       |     gradle     |          <https://sdkman.io/sdks#gradle>           |
+| Gradle  |     9.8.x       |     gradle     |          <https://sdkman.io/sdks#gradle>           |
 |   JDK   |     17.0.x      |      tem       |            <https://sdkman.io/jdks#tem>            |
 |   jq    |      1.6.x      |       jq       |                  Ubuntu archive                  |
 |  Maven  |      3.9.x      |     maven      |           <https://sdkman.io/sdks#maven>           |
 |  Mono   |    6.12.0.x     |   mono-devel   |  <https://download.mono-project.com/repo/ubuntu>   |
-| MSBuild |     16.10.x     |    msbuild     |  <https://download.mono-project.com/repo/ubuntu>   |
-| NodeJS  |     18.20.x     |     nodejs     |               npm public registry                |
-|   npm   |     10.8.x      |      npm       |               npm public registry                |
-|  NuGet  |      6.6.x      |     nuget      |  <https://download.mono-project.com/repo/ubuntu>   |
+| MSBuild |     17.x        |    msbuild     |  <https://packages.microsoft.com/ubuntu/24.04/prod> |
+| NodeJS  |     24.x        |     nodejs     |               npm public registry                |
+|   npm   |     11.x        |      npm       |               npm public registry                |
+|  NuGet  |     6.14.x      |     nuget      |       <https://dist.nuget.org/win-x86-commandline> |
 |   Pip   |     22.0.x      |  python3-pip   |                  Ubuntu archive                  |
 | Pipenv  |    2024.4.x     |     pipenv     |                  Ubuntu archive                  |
 | Podman  |      3.4.x      |     podman     |                  Ubuntu archive                  |
