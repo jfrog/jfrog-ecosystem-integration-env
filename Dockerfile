@@ -28,9 +28,9 @@ RUN apt-get update && apt-get -yq upgrade \
     && rm -f /usr/lib/python3*/EXTERNALLY-MANAGED \
     && rm -rf /var/lib/apt/lists/*
 
-# Node.js + Yarn + python symlinks. NodeSource repo is set up then nodejs installed
+# Node.js 24 LTS + Yarn + python symlinks. NodeSource repo is set up then nodejs installed
 # in the same layer; npm cache is cleaned to keep the layer minimal.
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -yq --no-install-recommends nodejs \
     && npm install -g --no-fund yarn \
     && npm cache clean --force \
@@ -74,16 +74,31 @@ RUN curl -sL https://packages.microsoft.com/config/ubuntu/24.04/packages-microso
     && rm /etc/apt/sources.list.d/microsoft-prod.list \
     && apt-get update \
     && apt-get install -yq --no-install-recommends \
-         dotnet-sdk-8.0 nuget msbuild mono-devel \
+         dotnet-sdk-8.0 mono-devel \
     && rm -rf /var/lib/apt/lists/*
 
-# Java JDK 17 + Maven + Gradle 9.0.0 via SDKMAN. Archives are flushed and SDKMAN
+# NuGet CLI. The `nuget` apt package from the Mono focal repo bundles NuGet 5.7.0
+# (CVE-2024-0057, CVE-2023-29337, CVE-2022-41032), so install a current nuget.exe
+# and expose it as `nuget` via a mono wrapper.
+ARG NUGET_VERSION=6.14.0
+RUN mkdir -p /usr/local/lib/nuget \
+    && curl -fsSL https://dist.nuget.org/win-x86-commandline/v${NUGET_VERSION}/nuget.exe -o /usr/local/lib/nuget/nuget.exe \
+    && printf '#!/bin/sh\nexec mono /usr/local/lib/nuget/nuget.exe "$@"\n' > /usr/local/bin/nuget \
+    && chmod +x /usr/local/bin/nuget
+
+# MSBuild. The Mono `msbuild` apt package (16.10.1) bundles NuGet.Packaging/Common/Protocol 5.7.0
+# and Newtonsoft.Json 8.0.3 (CVE-2024-0057 and others), so `msbuild` is served by the
+# .NET SDK instead, which ships current NuGet libraries.
+RUN printf '#!/bin/sh\nexec dotnet msbuild "$@"\n' > /usr/local/bin/msbuild \
+    && chmod +x /usr/local/bin/msbuild
+
+# Java JDK 17 + Maven + Gradle 9.8.2 via SDKMAN. Archives are flushed and SDKMAN
 # scratch dirs removed to keep the layer small.
 RUN curl -s "https://get.sdkman.io" | bash \
     && source "/home/frogger/.sdkman/bin/sdkman-init.sh" \
     && sdk install java `sdk list java | grep -E "$JAVA_VERSION.*tem" | head -1 | awk '{print $NF}'` && java -version \
     && sdk install maven \
-    && sdk install gradle 9.0.0 \
+    && sdk install gradle 9.8.2 \
     && sdk flush archives \
     && rm -rf /home/frogger/.sdkman/tmp /home/frogger/.sdkman/var/log
 
