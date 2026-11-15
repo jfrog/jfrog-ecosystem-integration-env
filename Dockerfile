@@ -100,9 +100,9 @@ RUN mkdir -p /usr/local/lib/nuget \
 RUN printf '#!/bin/sh\nexec dotnet msbuild "$@"\n' > /usr/local/bin/msbuild \
     && chmod +x /usr/local/bin/msbuild
 
-# Java JDK 17 + Maven + Gradle 9.8.2 via SDKMAN. Archives are flushed and SDKMAN
+# Java JDK 17 + Maven + Gradle 9.9.1 via SDKMAN. Archives are flushed and SDKMAN
 # scratch dirs removed to keep the layer small.
-# Gradle 9.8.2 bundles jackson 2.22.3 (CVE-2026-110879), so the jackson jars (core, databind,
+# Gradle 9.9.1 bundles jackson 2.22.3 (CVE-2026-110879), so the jackson jars (core, databind,
 # datatype-jdk8/jsr310) are swapped for 2.22.4 with SHA-1 verification against Maven Central.
 # jackson-annotations stays at 2.22: annotations are versioned 2.22 in the 2.22.4 BOM.
 # Gradle locates these jars by exact name via lib/jackson-*.properties, so those are updated too.
@@ -110,7 +110,7 @@ RUN curl -s "https://get.sdkman.io" | bash \
     && source "/home/frogger/.sdkman/bin/sdkman-init.sh" \
     && sdk install java `sdk list java | grep -E "$JAVA_VERSION.*tem" | head -1 | awk '{print $NF}'` && java -version \
     && sdk install maven \
-    && sdk install gradle 9.8.2 \
+    && sdk install gradle 9.9.1 \
     && GRADLE_LIB=/home/frogger/.sdkman/candidates/gradle/current/lib \
     && JACKSON_VERSION=2.22.4 \
     && JACKSON_REPO=https://repo1.maven.org/maven2/com/fasterxml/jackson \
