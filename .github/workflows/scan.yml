@@ -58,7 +58,12 @@ jobs:
 
       - name: Fail on findings
         run: |
-          COUNT=$(jq '[.Results[]? | .Vulnerabilities[]?] | length' trivy-report.json)
+          # Print each finding in the log (not only in the job summary), one error line each.
+          jq -r '[.Results[]? | .Target as $t | .Vulnerabilities[]? | . + {target: $t}]
+                 | unique_by(.PkgName + .InstalledVersion + .VulnerabilityID) | .[]
+                 | "::error title=\(.VulnerabilityID) (\(.Severity))::\(.PkgName) \(.InstalledVersion) -> fix in \(.FixedVersion) | \(.PkgPath // .PkgIdentifier.PURL // .target) | \(.Title // "")"' \
+            trivy-report.json
+          COUNT=$(jq '[.Results[]? | .Vulnerabilities[]?] | unique_by(.PkgName + .InstalledVersion + .VulnerabilityID) | length' trivy-report.json)
           echo "Fixable HIGH/CRITICAL findings: $COUNT"
           [ "$COUNT" -eq 0 ]
 
