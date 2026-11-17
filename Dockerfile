@@ -53,6 +53,8 @@ RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - \
 # without this, scans flag the old pip/setuptools wheel files inside
 # site-packages/virtualenv/seed/wheels/embed/ even after our system upgrade.
 # --no-cache-dir avoids baking the wheel cache into the layer.
+# The *.cdx.json SBOM files shipped by pip/virtualenv list setuptools 70.3.0 (pip's build-time tool,
+# not installed), and scanners report it as CVE-2025-47273, so they are deleted.
 # --ignore-installed on the upgrade: Ubuntu's apt-packaged python3-pip /
 # python3-setuptools / python3-cryptography deliberately omit the RECORD
 # metadata, so pip cannot uninstall them to perform an upgrade. Instead we
@@ -61,7 +63,8 @@ RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - \
 RUN pip install --no-cache-dir --quiet pipenv poetry \
     && pip install --no-cache-dir --quiet --upgrade --ignore-installed \
          'pip>=25.3' 'setuptools>=78.1.1' 'cryptography>=46.0.3' \
-    && virtualenv --upgrade-embed-wheels
+    && virtualenv --upgrade-embed-wheels \
+    && find /usr/local/lib/python3.12/dist-packages -name '*.cdx.json' -delete
 
 # Install Go
 RUN curl -fL https://golang.org/dl/go1.26.10.linux-amd64.tar.gz | tar -zxC /usr/local
@@ -106,6 +109,8 @@ RUN printf '#!/bin/sh\nexec dotnet msbuild "$@"\n' > /usr/local/bin/msbuild \
 # datatype-jdk8/jsr310) are swapped for 2.22.4 with SHA-1 verification against Maven Central.
 # jackson-annotations stays at 2.22: annotations are versioned 2.22 in the 2.22.4 BOM.
 # Gradle locates these jars by exact name via lib/jackson-*.properties, so those are updated too.
+# Gradle 9.9.1 also bundles guava 33.4.6-jre (CVE-2026-102554), swapped for 33.7.2-jre the same way;
+# `gradle --version` then confirms Gradle still starts.
 RUN curl -s "https://get.sdkman.io" | bash \
     && source "/home/frogger/.sdkman/bin/sdkman-init.sh" \
     && sdk install java `sdk list java | grep -E "$JAVA_VERSION.*tem" | head -1 | awk '{print $NF}'` && java -version \
@@ -125,6 +130,16 @@ RUN curl -s "https://get.sdkman.io" | bash \
        done \
     && sed -i "s/2\.22\.3/${JACKSON_VERSION}/g" "${GRADLE_LIB}"/jackson-*.properties \
     && ! grep -rl '2\.22\.3' "${GRADLE_LIB}" \
+    && GUAVA_OLD=33.4.6-jre GUAVA_NEW=33.7.2-jre \
+    && GUAVA_URL=https://repo1.maven.org/maven2/com/google/guava/guava/${GUAVA_NEW}/guava-${GUAVA_NEW}.jar \
+    && curl -fsSL --retry 5 --retry-delay 3 --retry-all-errors "$GUAVA_URL" -o /tmp/guava.jar \
+    && echo "$(curl -fsSL --retry 5 --retry-delay 3 --retry-all-errors "${GUAVA_URL}.sha1")  /tmp/guava.jar" | sha1sum -c - \
+    && test -f "${GRADLE_LIB}/guava-${GUAVA_OLD}.jar" \
+    && rm -f "${GRADLE_LIB}/guava-${GUAVA_OLD}.jar" \
+    && mv /tmp/guava.jar "${GRADLE_LIB}/guava-${GUAVA_NEW}.jar" \
+    && { sed -i "s/${GUAVA_OLD}/${GUAVA_NEW}/g" "${GRADLE_LIB}"/*.properties || true; } \
+    && ! grep -rl "${GUAVA_OLD}" "${GRADLE_LIB}" \
+    && /home/frogger/.sdkman/candidates/gradle/current/bin/gradle --version >/dev/null \
     && sdk flush archives \
     && rm -rf /home/frogger/.sdkman/tmp /home/frogger/.sdkman/var/log
 

@@ -1,0 +1,56 @@
+name: Update Tool Versions
+
+# Every night, bump the pinned tool versions (Go, Gradle, NuGet) to the newest
+# release in the same major line and open a PR. The PR runs the Vulnerability Scan
+# and Test workflows, so a bump only merges when the image still builds and scans clean.
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  BRANCH: bot/update-tool-versions
+  TITLE: "RTECO-0000 - Bump tool versions"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # A PR created with the default GITHUB_TOKEN does not start other workflows.
+          # Set the BOT_TOKEN secret (a PAT or app token with contents and pull-requests
+          # write access) so the scan and test checks run on the bot PR.
+          token: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Update versions
+        run: python3 -I scripts/update_versions.py | tee /tmp/changes.txt
+
+      - name: Open or update PR
+        env:
+          GH_TOKEN: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet; then
+            echo "No version updates."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git commit -am "$TITLE"
+          git push --force origin "$BRANCH"
+          BODY="Automatic update from the nightly workflow.
+
+          $(cat /tmp/changes.txt)
+
+          The Vulnerability Scan and Test checks must pass before merge."
+          if gh pr view "$BRANCH" --json state --jq .state 2>/dev/null | grep -q OPEN; then
+            gh pr edit "$BRANCH" --body "$BODY"
+          else
+            gh pr create --base "${{ github.event.repository.default_branch }}" --head "$BRANCH" \
+              --title "$TITLE" --body "$BODY"
+          fi
