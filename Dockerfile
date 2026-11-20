@@ -67,7 +67,7 @@ RUN pip install --no-cache-dir --quiet pipenv poetry \
     && find /usr/local/lib/python3.12/dist-packages -name '*.cdx.json' -delete
 
 # Install Go
-RUN curl -fL https://golang.org/dl/go1.26.10.linux-amd64.tar.gz | tar -zxC /usr/local
+RUN curl -fL https://golang.org/dl/go1.26.11.linux-amd64.tar.gz | tar -zxC /usr/local
 
 # Microsoft .NET SDK + Mono toolchain (NuGet, msbuild). Both apt sources are
 # registered, then a single apt install + cache strip in the same layer.
@@ -91,7 +91,7 @@ RUN curl -sL https://packages.microsoft.com/config/ubuntu/24.04/packages-microso
 # NuGet CLI. The `nuget` apt package from the Mono focal repo bundles NuGet 5.7.0
 # (CVE-2024-0057, CVE-2023-29337, CVE-2022-41032), so install a current nuget.exe
 # and expose it as `nuget` via a mono wrapper.
-ARG NUGET_VERSION=6.14.0
+ARG NUGET_VERSION=6.14.3
 RUN mkdir -p /usr/local/lib/nuget \
     && curl -fsSL https://dist.nuget.org/win-x86-commandline/v${NUGET_VERSION}/nuget.exe -o /usr/local/lib/nuget/nuget.exe \
     && printf '#!/bin/sh\nexec mono /usr/local/lib/nuget/nuget.exe "$@"\n' > /usr/local/bin/nuget \
@@ -115,7 +115,7 @@ RUN curl -s "https://get.sdkman.io" | bash \
     && source "/home/frogger/.sdkman/bin/sdkman-init.sh" \
     && sdk install java `sdk list java | grep -E "$JAVA_VERSION.*tem" | head -1 | awk '{print $NF}'` && java -version \
     && sdk install maven \
-    && sdk install gradle 9.9.1 \
+    && sdk install gradle 9.9.2 \
     && GRADLE_LIB=/home/frogger/.sdkman/candidates/gradle/current/lib \
     && JACKSON_VERSION=2.22.4 \
     && JACKSON_REPO=https://repo1.maven.org/maven2/com/fasterxml/jackson \
