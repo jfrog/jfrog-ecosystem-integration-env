@@ -48,6 +48,7 @@ RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - \
 
 # Pipenv + Poetry. Then explicitly upgrade pip / setuptools / cryptography to
 # versions past the known-vulnerable ones (CVE-2025-8869 in pip < 25.3,
+# CVE-2026-133949 / XRAY-1172638 in pip < 26.2.2, which bundles a certifi with compromised certificates,
 # CVE-2025-47273 in setuptools < 78.1.1, multiple CVEs in cryptography < 46.0.3).
 # Finally refresh the wheels that virtualenv bundles for venv creation;
 # without this, scans flag the old pip/setuptools wheel files inside
@@ -62,7 +63,7 @@ RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - \
 # which shadows the apt copies on sys.path.
 RUN pip install --no-cache-dir --quiet pipenv poetry \
     && pip install --no-cache-dir --quiet --upgrade --ignore-installed \
-         'pip>=25.3' 'setuptools>=78.1.1' 'cryptography>=46.0.3' \
+         'pip>=26.2.2' 'setuptools>=78.1.1' 'cryptography>=46.0.3' \
     && virtualenv --upgrade-embed-wheels \
     && find /usr/local/lib/python3.12/dist-packages -name '*.cdx.json' -delete
 
@@ -118,11 +119,14 @@ RUN curl -s "https://get.sdkman.io" | bash \
 
 # Podman + Docker CLI. Docker apt source uses a signed-by keyring; everything
 # installed in one layer with the apt cache stripped.
+# containerd.io is not installed: it ships /usr/bin/runc, and runc 1.5.3 embeds golang.org/x/net 0.55.0
+# (CVE-2026-39821 / XRAY-988717, fixed in x/net 0.57.0). The image only needs the Docker client, not a daemon.
+# Podman then uses crun (a C runtime, no Go dependencies) because its dependency is "crun | runc".
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
          | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
          > /etc/apt/sources.list.d/docker.list \
     && apt-get update \
     && apt-get install -yq --no-install-recommends \
-         podman docker-ce-cli containerd.io \
+         podman docker-ce-cli \
     && rm -rf /var/lib/apt/lists/*
