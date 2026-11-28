@@ -111,7 +111,7 @@ RUN curl -s "https://get.sdkman.io" | bash \
     && source "/home/frogger/.sdkman/bin/sdkman-init.sh" \
     && sdk install java `sdk list java | grep -E "$JAVA_VERSION.*tem" | head -1 | awk '{print $NF}'` && java -version \
     && sdk install maven \
-    && sdk install gradle 9.9.2 \
+    && sdk install gradle 9.9.3 \
     && /home/frogger/.sdkman/candidates/gradle/current/bin/gradle --version >/dev/null \
     && sdk flush archives \
     && rm -rf /home/frogger/.sdkman/tmp /home/frogger/.sdkman/var/log
